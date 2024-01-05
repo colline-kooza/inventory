@@ -9,7 +9,7 @@ import { GrIntegration } from "react-icons/gr";
 
 export default function SideBar() {
   return (
-    <div className='w-[19%] bg-slate-900 min-h-screen'>
+    <div className='w-[100%] bg-slate-900 min-h-screen'>
       <div class="flex h-screen flex-col justify-between border-e ">
   <div class="px-4 py-6">
     <span class="shrink-0 flex items-center gap-3 justify-center  h-10 w-32 place-content-center rounded-lg  text-lg text-gray-200 font-bold">

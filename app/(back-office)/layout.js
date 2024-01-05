@@ -4,9 +4,11 @@ import React from 'react'
 
 export default function Layout({children}) {
   return (
-    <div className='flex w-full min-h-screen'>
-     <SideBar/>
-      <main className='w-[81%] bg-gray-white'>
+    <div className='flex min-w-full min-h-screen relative'>
+      <div className='fixed left-0 w-[19%]'>
+       <SideBar/>
+      </div>
+      <main className='w-[81%]  lg:ml-[16rem] bg-gray-white'>
         <Header/>
       {children}
       </main>
