@@ -1,13 +1,38 @@
 import Link from 'next/link';
 import React from 'react'
 import { MdOutlineInventory, MdOutlineInventory2 } from "react-icons/md";
-import { IoCartOutline, IoHomeOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoCartOutline, IoHomeOutline } from "react-icons/io5";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { VscGraph } from "react-icons/vsc";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { GrIntegration } from "react-icons/gr";
 
 export default function SideBar() {
+  const salesLink=[
+    {
+      title:"customers",
+      path:"/dashboard/sales/customers"
+    },
+    {
+      title:"sales Returns",
+      path:"/dashboard/sales/salesreturns"
+        },
+
+    {
+      title:"payments Received",
+      path:"/dashboard/sales/paymentsrecieved"
+        },
+
+    {
+      title:"Packages",
+      path:"/dashboard/sales/packages"
+        },
+    {
+      title:"sales  Order",
+      path:"/dashboard/sales/salesorder"   
+     },
+
+  ]
   return (
     <div className='w-[100%] bg-slate-900 min-h-screen'>
       <div class="flex h-screen flex-col justify-between border-e ">
@@ -17,15 +42,126 @@ export default function SideBar() {
      Inventory
     </span>
     <ul class="mt-6 space-y-1 flex flex-col gap-2 text-slate-300">
+      <li className="bg-gray-100 rounded-md">
+    <details className="group [&_summary::-webkit-details-marker]:hidden">
+      <summary
+        className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2  hover:bg-gray-100 hover:text-gray-700"
+      >
+        <Link href="/dashboard/home" className="flex items-center gap-2 shrink-0 text-gray-500 text-sm font-medium"> 
+          <IoHomeOutline size={19}/>
+          Home
+        </Link>
+        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </span>
+      </summary>
+
+      <ul class="mt-2 space-y-1 px-4 bg-slate-900 hover:bg-slate-900">
+            <li>
+              <Link
+                href=""
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+               Announcements <IoAddCircleOutline size={18}/>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href=""
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+                Getting Started <IoAddCircleOutline size={18}/>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href=""
+                class="flex justify-between items-center lock rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+                Over-View <IoAddCircleOutline size={18}/>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href=""
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+                Updates <IoAddCircleOutline size={18}/>
+              </Link>
+            </li>
+          </ul>
+    </details>
+  </li>
+
       <li>
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary
             class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2  hover:bg-gray-100 hover:text-gray-700"
           >
-            <Link href="/dashboard/home" class=" flex items-center gap-2 shrink-0  text-sm font-medium"> 
-            <IoHomeOutline size={19}/>
-           
-            Home </Link>
+            <Link href="/dashboard/sales" class=" flex items-center gap-2 shrink-0  text-sm font-medium"> 
+            <IoCartOutline size={19}/>
+            Sales </Link>
+
+            <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </summary>
+
+          <ul class="mt-2 space-y-1 px-4">
+
+            {
+              salesLink.map((sales , i)=>{
+                return(
+                  <li>
+              <Link
+                href={sales.path}
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+               {sales.title} <IoAddCircleOutline size={18}/>
+              </Link>
+            </li>
+                )
+              })
+            }
+        
+          </ul>
+        </details>
+      </li>
+
+      <li>
+        <details class="group [&_summary::-webkit-details-marker]:hidden">
+          <summary
+            class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2  hover:bg-gray-100 hover:text-gray-700"
+          >
+            <Link   href="/dashboard/inventory" class=" flex items-center gap-2 shrink-0  text-sm font-medium"> 
+            <MdOutlineInventory2 size={19}/>
+            Inventory
+            </Link>
 
             <span class="shrink-0 transition duration-300 group-open:-rotate-180">
               <svg
@@ -46,58 +182,32 @@ export default function SideBar() {
           <ul class="mt-2 space-y-1 px-4">
             <li>
               <Link
-                href=""
-                class="block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+                href="/dashboard/inventory/adjustments"
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
               >
-               Announcements
+               Adjustments <IoAddCircleOutline size={18}/>
               </Link>
             </li>
 
             <li>
               <Link
-                href=""
-                class="block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+               href="/dashboard/inventory/itemgroups"
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
               >
-                Getting Started
+               Item Group <IoAddCircleOutline size={18}/>
               </Link>
             </li>
 
             <li>
               <Link
-                href=""
-                class="block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+                href="/dashboard/inventory/items"
+                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
               >
-                Over-View
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href=""
-                class="block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Updates
+                Items <IoAddCircleOutline size={18}/>
               </Link>
             </li>
           </ul>
         </details>
-      </li>
-
-      <li>
-        <Link href="/dashboard/sales" class=" hover:text-slate-900 font-semibold flex items-center  gap-2 block rounded-lg bg-gray-100 px-4 py-2 text-sm  text-gray-700">
-        <IoCartOutline size={19}/>
-         Sales
-        </Link>
-      </li>
-
-      <li>
-        <Link
-          href="/dashboard/inventory"
-          class="flex items-center gap-2 shrink-0 block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
-        >
-        <MdOutlineInventory2 size={19}/>
-         Inventory
-        </Link>
       </li>
 
       <li>
@@ -142,7 +252,6 @@ export default function SideBar() {
       </li>
     </ul>
   </div>
-
 
   <div class="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
     <Link href="/" class="dm flex items-center gap-2 shrink-0  p-4 hover:bg-gray-800">

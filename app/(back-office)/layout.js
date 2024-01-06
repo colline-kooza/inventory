@@ -8,9 +8,11 @@ export default function Layout({children}) {
       <div className='fixed left-0 w-[19%]'>
        <SideBar/>
       </div>
-      <main className='w-[81%]  lg:ml-[16rem] bg-gray-white'>
+      <main className='w-[81%]  lg:ml-[16rem] bg-gray-white px-4'>
         <Header/>
-      {children}
+        <div className='dm'>
+          {children}
+        </div>
       </main>
      </div>
   )
