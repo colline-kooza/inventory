@@ -33,6 +33,32 @@ export default function SideBar() {
      },
 
   ]
+
+  const inventoryLinks=[
+    {
+      title:"Adjustments",
+      path:"/dashboard/inventory/adjustments"
+    },
+    {
+      title:"Categories",
+      path:"/dashboard/inventory/categories/new"
+     },
+
+    {
+      title:"Items ",
+      path:"/dashboard/inventory/items/new"
+    },
+
+    {
+      title:"Brands",
+      path:"/dashboard/inventory/brands/new"
+        },
+    {
+      title:"ware house",
+      path:"/dashboard/inventory/warehouse/new"  
+     },
+
+  ]
   return (
     <div className='w-[100%] bg-slate-900 min-h-screen'>
       <div class="flex h-screen flex-col justify-between border-e ">
@@ -180,32 +206,20 @@ export default function SideBar() {
           </summary>
 
           <ul class="mt-2 space-y-1 px-4">
-            <li>
-              <Link
-                href="/dashboard/inventory/adjustments"
-                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
-              >
-               Adjustments <IoAddCircleOutline size={18}/>
-              </Link>
-            </li>
-
-            <li>
-              <Link
-               href="/dashboard/inventory/itemgroups"
-                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
-              >
-               Item Group <IoAddCircleOutline size={18}/>
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href="/dashboard/inventory/items"
-                class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Items <IoAddCircleOutline size={18}/>
-              </Link>
-            </li>
+            {
+              inventoryLinks.map((link , i)=>{
+                return(
+                  <li key={i}>
+                  <Link
+                    href={link.path}
+                    class="flex justify-between items-center block rounded-lg px-4 py-2 text-sm font-medium text-slate-300 hover:bg-gray-100 hover:text-gray-700"
+                  >
+                   {link.title} <IoAddCircleOutline size={18}/>
+                  </Link>
+                </li>
+                )
+              })
+            }
           </ul>
         </details>
       </li>

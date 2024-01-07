@@ -3,11 +3,52 @@ import ItemHeader from '@/components/dashboard/ItemHeader'
 import React from 'react'
 
 export default function Inventory() {
+  const cardData = [
+    {
+      title: "Categories",
+      button: "New categories",
+      path: "/dashboard/inventory/categories/new",
+      description: "Create and manage item groups effortlessly for organized inventory control.",
+    },
+    {
+      title: "Item",
+      button: "New Item Group",
+      path: "/dashboard/inventory/items/new",
+      description: "Add new items to your inventory and keep track of stock details.",
+    },
+    {
+      title: "Brands",
+      button: "New Brand",
+      path: "/dashboard/inventory/brands/new",
+      description: "Enhance inventory management by creating and updating items seamlessly.",
+    },
+    {
+      title: "ware house",
+      button: "New Ware house",
+      path: "/dashboard/inventory/units/new",
+      description: "Optimize inventory tracking with the addition and maintenance of individual items.",
+    },
+    {
+      title: "Units",
+      button: "New Units",
+      path: "/dashboard/inventory/units/new",
+      description: "Streamline inventory processes by organizing and updating individual item records.",
+    },
+  ];
+  
   return (
     <div className='py-3'>
       <ItemHeader/>
-      <div className=''>
-      <InventoryCard/>
+      <div className='px-[3rem]'>
+        <div  className='grid grid-cols-2 min-w-full min-h-screen p-5 flex flex-col  gap-8'>
+          {
+            cardData.map((item , i)=>{
+              return(
+                <InventoryCard cardData={item} key={i}/>
+              )
+            })
+          }
+        </div>
       </div>
     </div>
   )

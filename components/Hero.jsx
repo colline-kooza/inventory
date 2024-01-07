@@ -15,8 +15,28 @@ export default function Hero() {
         </span>
     </h1>
     <p class="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7">Optimize your inventory effortlessly! Our app streamlines management, providing real-time updates and insights. Track stock, sales, and more seamlessly. Try it now for enhanced efficiency.</p>
-    <Link class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80" href="/dashboard/home/overview">Get started→
-    </Link>
+    
+<Link
+  class="inline-flex mt-8 items-center gap-2 rounded border border-[#fb923c] bg-[#fb923c] px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-[#fb923c]"
+  href="/dashboard/home/overview"
+>
+  <span class="text-sm font-semibold">Get started </span>
+
+  <svg
+    class="h-5 w-5 rtl:rotate-180"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M17 8l4 4m0 0l-4 4m4-4H3"
+    />
+  </svg>
+</Link>
 </main>
   </>
 
