@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function SubmitButton({loading , buttonText}) {
   return (
-<>
+<div className='mt-8'>
 {
     loading?( 
         <div>
@@ -22,6 +22,6 @@ export default function SubmitButton({loading , buttonText}) {
         )
   }
 
-</> 
+</div> 
   )
 }

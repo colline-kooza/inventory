@@ -1,7 +1,175 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import FormHeader from '@/components/dashboard/FormHeader'
+import TextInput from '@/components/formInputs/TextInput'
+import SubmitButton from '@/components/formInputs/SubmitButton'
+import TextArea from '@/components/formInputs/TextArea'
+import SelectInput from '@/components/formInputs/SelectInput'
+import Image from 'next/image'
+import { UploadDropzone } from '@/utils/uploadthing'
+import { HiPencilSquare } from 'react-icons/hi2'
+import ImageUpload from '@/components/formInputs/ImageUpload'
 
 export default function NewItem() {
+  const [loading , setLoading]=useState(false)
+  const [imageUrl , setImageUrl]=useState()
+  const categories=[
+    {
+      label:"Electronics",
+      value:"hkvosyzfy84oiz"
+    },
+    {
+      label:"Accessories",
+      value:"mnsdfvjkfd78t8"
+    },
+  ]
+  const units=[
+    {
+      label:"kgs",
+      value:"hkvosyzfy84oiz"
+    },
+    {
+      label:"Pcs",
+      value:"mnsdfvjkfd78t8"
+    },
+  ]
+  const brands=[
+    {
+      label:"HP",
+      value:"hkvosyzfy84oiz"
+    },
+    {
+      label:"DELL",
+      value:"mnsdfvjkfd78t8"
+    },
+  ]
+  const warehouse=[
+    {
+      label:"warehouse A",
+      value:"hkvosyzfy84oiz"
+    },
+    {
+      label:"warehouse B",
+      value:"mnsdfvjkfd78t8"
+    },
+    {
+      label:"warehouse C",
+      value:"mnsdfvjkfd78t8"
+    },
+  ]
+  
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+      } = useForm()
+
+   async function onSubmit(data){
+    console.log(data)
+      try {
+        const itemData={
+          ...data , imageUrl 
+        }
+        setLoading(true)
+        const response = await fetch("http://localhost:3000/api/items",{
+          method:"POST",
+          headers:{
+            "content-Type":"application/json"
+          },
+          body:JSON.stringify(itemData)
+        })
+        if (response.ok){
+          console.log(response)
+         const item=await response.json()
+         console.log(item)
+         setLoading(false)
+        }
+    reset()
+      } catch (error) {
+        setLoading(true)
+        console.log(error)
+      }
+      }
   return (
-    <div>NewItem</div>
+    <div className='flex flex-col gap-2'>
+      {/* head*/}
+      <div className=''>
+       <FormHeader title="New item"/>
+     </div>
+   {/* form */}
+   <div className='mx-[5rem]'>
+   <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 mt-5 bg-slate-100 shadow-lg">
+   <div className="grid gap-4 mb-4 grid-cols-2 items-center">
+  <div className="col-span-2">
+    <TextInput label="Item Title" name="title" register={register} errors={errors} type="text" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <SelectInput register={register} options={categories} errors={errors} name="categoryId" label="Select Item Category" />
+  </div>
+  
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput label="Buying Price" name="buyingPrice" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <SelectInput register={register} options={warehouse} errors={errors} name="warehouseId" label="Select the Warehouse" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput label="Selling Price" name="sellingPrice" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput label="Re-Order Point" name="reOrderPoint" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput IsRequired={false} label="Item SKU" name="sku" register={register} errors={errors} type="text" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <SelectInput register={register} options={brands} errors={errors} name="brandId" label="Select the Item Brand" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput label="Item Quantity" name="qty" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <SelectInput register={register} options={units} errors={errors} name="unitId" label="Select the Item Unit" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput IsRequired={false} label="Item Barcode" name="barcode" register={register} errors={errors} type="text" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput IsRequired={false} label="Item Weight in kgs" name="weight" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput IsRequired={false} label="Item Dimension in cm (20 x 30 x 100)" name="dimension" register={register} errors={errors} type="text" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput IsRequired={false} label="Item Tax Rate in %" name="taxRate" register={register} errors={errors} type="number" />
+  </div>
+
+  <div className="col-span-2">
+    <TextArea errors={errors} label="Item Description" description="description" register={register} />
+  </div>
+
+  <div className="col-span-2">
+    <TextArea errors={errors} label="Item Notes" description="notes" register={register} />
+  </div>
+</div>
+ <ImageUpload label="item image" endpoint="imageUploader"  imageUrl={imageUrl} setImageUrl={setImageUrl}/>
+    <SubmitButton loading={loading} buttonText="Add new item"/>
+    </form>
+  </div>
+    </div>
   )
 }

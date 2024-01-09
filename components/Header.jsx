@@ -7,7 +7,7 @@ import { LuUsers2 } from "react-icons/lu";
 
 export default function Header() {
   return (
-  <header className="bg-slate-200 min-h-[10%]">
+  <header className="bg-slate-200 ">
     <div className="mx-auto max-w-screen-xl px-4 py-3 border-b border-slate-200  lg:py-2 sm:px-6 lg:px-8">
       <div className="flex items-center sm:justify-between sm:gap-4">
         <div className="relative hidden sm:block">

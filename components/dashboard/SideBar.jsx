@@ -37,7 +37,7 @@ export default function SideBar() {
   const inventoryLinks=[
     {
       title:"Adjustments",
-      path:"/dashboard/inventory/adjustments"
+      path:"/dashboard/inventory/adjustments/new"
     },
     {
       title:"Categories",

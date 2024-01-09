@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request){
     try {
-        const {description,name}=request.json()
+        const {description,name}=await request.json()
         const category={description , name}
         console.log(category)
         return NextResponse.json(category)

@@ -1,20 +1,19 @@
 "use client"
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import FormHeader from '@/components/dashboard/FormHeader'
 import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
 
-export default function NewWareHouse() {
-  const options=[
+export default function TransferInventory() {
+  const branches=[
     {
-      label:"Branch",
-      value:"Branch"
+      label:"Branch A",
+      value:"Branch A"
     },
     {
-      label:"Main",
+      label:"Branch A",
       value:"Main"
     },
   ]
@@ -30,7 +29,7 @@ export default function NewWareHouse() {
     console.log(data)
       try {
         setLoading(true)
-        const response = await fetch("http://localhost:3000/api/warehouse",{
+        const response = await fetch("http://localhost:3000/api/adjustments",{
           method:"POST",
           headers:{
             "content-Type":"application/json"
@@ -39,8 +38,8 @@ export default function NewWareHouse() {
         })
         if (response.ok){
           console.log(response)
-         const warehouse=await response.json()
-         console.log(warehouse)
+         const adjustments=await response.json()
+         console.log(adjustments)
          setLoading(false)
         }
     reset()
@@ -50,23 +49,17 @@ export default function NewWareHouse() {
       }
       }
   return (
-    <div className='flex flex-col gap-2'>
-      {/* head*/}
-      <div className=''>
-       <FormHeader title="New Ware House"/>
-     </div>
-   {/* form */}
-   <div className='mx-[5rem]'>
+       <div className='mx-[5rem]'>
    <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 bg-slate-50 shadow-lg">
     <div className="grid gap-4 mb-4 grid-cols-2">
-      <TextInput label="warehouse title" name="title" register={register} errors={errors} type="text"/>
-      <TextInput label="warehouse location" name="location" register={register} errors={errors} type="text"/>
-    <TextArea errors={errors} label="warehouse description"  description="description" register={register} /> 
-    <SelectInput register={register} options={options} errors={errors} name="type" label="select ware house type"/>
+      <TextInput label="Enter amount of Stock to Transfer" name="transferStockQty" register={register} errors={errors} type="number"/>
+      <div className="col-span-2">
+    <TextArea errors={errors} label="Adjustments Notes" description="notes" register={register} />
+     </div>   
+     <SelectInput register={register} options={branches} errors={errors} name="recievingBranchId" label="select branch that will receive the stock"/>
     </div>
-    <SubmitButton loading={loading} buttonText="Add new warehouse"/>
+    <SubmitButton loading={loading} buttonText="Add new adjustments"/>
     </form>
   </div>
-    </div>
   )
 }
