@@ -6,10 +6,8 @@ import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
-import Image from 'next/image'
-import { UploadDropzone } from '@/utils/uploadthing'
-import { HiPencilSquare } from 'react-icons/hi2'
 import ImageUpload from '@/components/formInputs/ImageUpload'
+import ApiRequest from '@/utils/ApiRequest'
 
 export default function NewItem() {
   const [loading , setLoading]=useState(false)
@@ -64,33 +62,16 @@ export default function NewItem() {
         handleSubmit,
         reset,
         formState: { errors },
-      } = useForm()
+    } = useForm()
 
    async function onSubmit(data){
-    console.log(data)
-      try {
-        const itemData={
-          ...data , imageUrl 
-        }
-        setLoading(true)
-        const response = await fetch("http://localhost:3000/api/items",{
-          method:"POST",
-          headers:{
-            "content-Type":"application/json"
-          },
-          body:JSON.stringify(itemData)
-        })
-        if (response.ok){
-          console.log(response)
-         const item=await response.json()
-         console.log(item)
-         setLoading(false)
-        }
-    reset()
-      } catch (error) {
-        setLoading(true)
-        console.log(error)
-      }
+    const itemData={
+      ...data , imageUrl 
+    }
+    console.log(itemData)
+    const baseUrl = 'http://localhost:3000';
+    const apiUrl = `${baseUrl}/api/items`;
+    ApiRequest({ setLoading, url: apiUrl, data:itemData, toastName: 'item', reset, method: 'POST' });
       }
   return (
     <div className='flex flex-col gap-2'>
@@ -123,6 +104,10 @@ export default function NewItem() {
   </div>
 
   <div className="col-span-2 sm:col-span-1 mb-4">
+    <TextInput label="Supplier" name="supplier" register={register} errors={errors} type="text" />
+  </div>
+
+  <div className="col-span-2 sm:col-span-1 mb-4">
     <TextInput label="Re-Order Point" name="reOrderPoint" register={register} errors={errors} type="number" />
   </div>
 
@@ -151,7 +136,7 @@ export default function NewItem() {
   </div>
 
   <div className="col-span-2 sm:col-span-1 mb-4">
-    <TextInput IsRequired={false} label="Item Dimension in cm (20 x 30 x 100)" name="dimension" register={register} errors={errors} type="text" />
+    <TextInput IsRequired={false} label="Item Dimension in cm (20 x 30 x 100)" name="dimension" register={register} errors={errors} type="number" />
   </div>
 
   <div className="col-span-2 sm:col-span-1 mb-4">

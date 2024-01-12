@@ -6,6 +6,7 @@ import { TbBrandSlack } from "react-icons/tb";
 import { MdWarehouse } from "react-icons/md";
 import { MdAdUnits } from "react-icons/md";
 import { HiAdjustmentsVertical } from "react-icons/hi2";
+import { FaSupple } from "react-icons/fa6";
 
 
 import React from 'react'
@@ -52,6 +53,13 @@ export default function Inventory() {
       button: "New Adjustment",
       icon: HiAdjustmentsVertical,
       path: "/dashboard/inventory/adjustments/new",
+      description: "Streamline inventory processes by organizing and updating individual item records.",
+    },
+    {
+      title: "Supplier",
+      button: "New Supplier",
+      icon: FaSupple ,
+      path: "/dashboard/inventory/supplier/new",
       description: "Streamline inventory processes by organizing and updating individual item records.",
     },
   ];

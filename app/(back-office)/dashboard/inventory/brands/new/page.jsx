@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import FormHeader from '@/components/dashboard/FormHeader'
 import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
-import TextArea from '@/components/formInputs/TextArea'
+
+import ApiRequest from '@/utils/ApiRequest'
 
 export default function Brands() {
   const [loading , setLoading]=useState(false)
@@ -16,27 +17,10 @@ export default function Brands() {
       } = useForm()
 
    async function onSubmit(data){
-    console.log(data)
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3000/api/brands",{
-          method:"POST",
-          headers:{
-            "content-Type":"application/json"
-          },
-          body:JSON.stringify(data)
-        })
-        if (response.ok){
-        console.log(response)
-         const brand=await response.json()
-         console.log(brand)
-         setLoading(false)
-        }
-    reset()
-      } catch (error) {
-        setLoading(true)
-        console.log(error)
-      }
+    const baseUrl = 'http://localhost:3000';
+    const apiUrl = `${baseUrl}/api/brands`;
+    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'brand', reset, method: 'POST' });
+
       }
   return (
     <div className='flex flex-col gap-2'>

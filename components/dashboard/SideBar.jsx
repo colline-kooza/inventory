@@ -57,7 +57,14 @@ export default function SideBar() {
       title:"ware house",
       path:"/dashboard/inventory/warehouse/new"  
      },
-
+    {
+      title:"Units",
+      path:"/dashboard/inventory/units/new"  
+     },
+    {
+      title:"Supplier",
+      path:"/dashboard/inventory/supplier/new"  
+     },
   ]
   return (
     <div className='w-[100%] bg-slate-900 min-h-screen'>

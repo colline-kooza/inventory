@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Warehouse {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  title                String
+  location             String?
+  description          String?
+  type                 String
+  sendingAdjustments   Adjustment[] @relation(name: "SendingWarehouse")
+  receivingAdjustments Adjustment[] @relation(name: "ReceivingWarehouse")
+  items                Item[]
+}
+
+model Item {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  category     Category?    @relation(fields: [categoryId], references: [id], onDelete:Cascade)
+  categoryId   String       @db.ObjectId
+  sku          String       @unique
+  barcode      String?
+  qty          Int?
+  unit         Unit?        @relation(fields: [unitId], references: [id])
+  unitId       String       @db.ObjectId
+  brand        Brand ?     @relation(fields: [brandId], references: [id])
+  brandId      String       @db.ObjectId
+  buyingPrice  Float
+  sellingPrice Float
+  supplier     Supplier?    @relation(fields: [supplierId], references: [id])
+  supplierId   String       @db.ObjectId
+  reorderPoint Float?
+  location     String?
+  images       String?
+  weight       Float?
+  dimensions   Float?
+  taxRate      Float?
+  notes        String?
+  warehouse    Warehouse    @relation(fields: [warehouseId], references: [id])
+  warehouseId  String       @db.ObjectId
+  Adjustment   Adjustment[]
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt") 
+}
+
+model Adjustment {
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  referenceNumber      String
+  sendingWarehouse     Warehouse @relation(name: "SendingWarehouse", fields: [sendingWarehouseId], references: [id])
+  sendingWarehouseId   String    @db.ObjectId
+  receivingWarehouse   Warehouse @relation(name: "ReceivingWarehouse", fields: [receivingWarehouseId], references: [id])
+  receivingWarehouseId String    @db.ObjectId
+  notes                String?
+  quantity             Int
+  item                 Item      @relation(fields: [itemId], references: [id])
+  itemId               String    @db.ObjectId
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt") 
+}
+
+model Category {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  items       Item[]
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt")
+}
+
+model Unit {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  abbreviation String
+  items        Item[]
+}
+
+model Brand {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  brand String
+  items Item[]
+}
+
+model Supplier {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String?
+  address       String?
+  contactPerson String?
+  supplierCode  String  @unique
+  paymentTerms  String?
+  taxID         String?
+  notes         String?
+  items         Item[]
+}

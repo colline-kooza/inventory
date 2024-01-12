@@ -5,7 +5,7 @@ export default function InventoryCard({ cardData }) {
   const IconComponent = cardData.icon; 
 
   return (
-    <div className='bg-gray-200 flex flex-col items-center h-[90%] gap-3 p-4 rounded-lg shadow-md'>
+    <div className='bg-gray-200 flex flex-col items-center h-[98%] gap-3 p-4 rounded-lg shadow-md'>
       <h2 className='text-sm font-semibold'>{cardData.title}</h2>
       <div>
         <IconComponent size={40} />

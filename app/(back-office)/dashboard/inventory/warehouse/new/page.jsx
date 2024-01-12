@@ -6,6 +6,8 @@ import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
+import toast from 'react-hot-toast'
+import ApiRequest from '@/utils/ApiRequest'
 
 export default function NewWareHouse() {
   const options=[
@@ -28,26 +30,10 @@ export default function NewWareHouse() {
 
    async function onSubmit(data){
     console.log(data)
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3000/api/warehouse",{
-          method:"POST",
-          headers:{
-            "content-Type":"application/json"
-          },
-          body:JSON.stringify(data)
-        })
-        if (response.ok){
-          console.log(response)
-         const warehouse=await response.json()
-         console.log(warehouse)
-         setLoading(false)
-        }
-    reset()
-      } catch (error) {
-        setLoading(true)
-        console.log(error)
-      }
+    const baseUrl = 'http://localhost:3000';
+    const apiUrl = `${baseUrl}/api/warehouse`;
+    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method: 'POST' });
+     
       }
   return (
     <div className='flex flex-col gap-2'>

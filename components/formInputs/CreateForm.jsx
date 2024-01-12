@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import TextInput from './TextInput'
 import SubmitButton from './SubmitButton'
 import TextArea from './TextArea'
+import ApiRequest from '@/utils/ApiRequest'
 
 export default function CreateForm() {
     const [loading , setLoading]=useState(false)
@@ -15,29 +16,14 @@ export default function CreateForm() {
       } = useForm()
 
    async function onSubmit(data){
-    console.log(data)
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3000/api/categories/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            description: data.description,
-            name: data.name,
-          }),
-        });
-        if (response.ok){
-         const categories=await response.json()
-         console.log(categories)
-         setLoading(false)
-        }
-    reset()
-      } catch (error) {
-        setLoading(true)
-        console.log(error)
-      }
+    const categoryData={
+      description: data.description,
+      title: data.name
+    }
+    const baseUrl = 'http://localhost:3000';
+    const apiUrl = `${baseUrl}/api/categories`;
+    ApiRequest({ setLoading, url: apiUrl, data:categoryData, toastName: 'category', reset, method: 'POST' });
+      
       }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 bg-slate-50 shadow-lg">
