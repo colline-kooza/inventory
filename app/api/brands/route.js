@@ -3,10 +3,10 @@ import { NextResponse } from "next/server"
 
 export async function POST(request){
     try {
-        const {brand}=await request.json()
+        const {title}=await request.json()
         const brands = await db.brand.create({
             data: {
-                brand
+              title
             },
           });
         return NextResponse.json(brands)
@@ -20,4 +20,22 @@ export async function POST(request){
         })
     }
 
+}
+
+export async function GET(request) {
+    try {
+      const  brands = await db.brand.findMany();
+      return NextResponse.json(brands);
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json(
+        {
+          error,
+          message: "failed to fetch brands",
+        },
+        {
+         status: 500,
+        }
+      );
+    }
 }

@@ -66,7 +66,7 @@ export default function Inventory() {
   
   return (
     <div className='py-3'>
-      <ItemHeader/>
+      <ItemHeader title="Inventory managing" link="/dashboard/inventory/"/>
       <div className='px-[3rem]'>
         <div  className='grid grid-cols-3 min-w-full min-h-screen p-5  gap-8'>
           {

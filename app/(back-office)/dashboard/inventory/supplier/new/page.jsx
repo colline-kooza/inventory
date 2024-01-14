@@ -69,10 +69,6 @@ ApiRequest({ setLoading, url: apiUrl, data, toastName: 'supplier', reset, method
         </div>
 
         <div className='className="col-span-2 sm:col-span-1 mb-4"'>
-        <TextInput label="Supplier Contact" name="supplierCode" register={register} errors={errors} type="number"/>
-        </div>
-        
-        <div className='className="col-span-2 sm:col-span-1 mb-4"'>
         <TextInput label="Supplier Email" name="email" register={register} errors={errors} type="email"/>
         </div>
         

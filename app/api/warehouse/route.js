@@ -25,4 +25,20 @@ export async function POST(request) {
     }
   }
   
-  
+  export async function GET(request) {
+    try {
+      const  warehouse = await db.warehouse.findMany();
+      return NextResponse.json(warehouse);
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json(
+        {
+          error,
+          message: "failed to fetch warehouses",
+        },
+        {
+         status: 500,
+        }
+      );
+    }
+  }

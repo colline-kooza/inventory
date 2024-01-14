@@ -37,37 +37,37 @@ export default function SideBar() {
   const inventoryLinks=[
     {
       title:"Adjustments",
-      path:"/dashboard/inventory/adjustments/new"
+      path:"/dashboard/inventory/adjustments/"
     },
     {
       title:"Categories",
-      path:"/dashboard/inventory/categories/new"
+      path:"/dashboard/inventory/categories/"
      },
 
     {
       title:"Items ",
-      path:"/dashboard/inventory/items/new"
+      path:"/dashboard/inventory/items/"
     },
 
     {
       title:"Brands",
-      path:"/dashboard/inventory/brands/new"
+      path:"/dashboard/inventory/brands/"
         },
     {
       title:"ware house",
-      path:"/dashboard/inventory/warehouse/new"  
+      path:"/dashboard/inventory/warehouse/"  
      },
     {
       title:"Units",
-      path:"/dashboard/inventory/units/new"  
+      path:"/dashboard/inventory/units/"  
      },
     {
       title:"Supplier",
-      path:"/dashboard/inventory/supplier/new"  
+      path:"/dashboard/inventory/supplier"  
      },
   ]
   return (
-    <div className='w-[100%] bg-slate-900 min-h-screen'>
+    <div className='w-[100%] bg-slate-900 min-h-screen overflow-y-auto'>
       <div class="flex h-screen flex-col justify-between border-e ">
   <div class="px-4 py-6">
     <span class="shrink-0 flex items-center gap-3 justify-center  h-10 w-32 place-content-center rounded-lg  text-lg text-gray-200 font-bold">
@@ -275,7 +275,7 @@ export default function SideBar() {
   </div>
 
   <div class="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
-    <Link href="/" class="dm flex items-center gap-2 shrink-0  p-4 hover:bg-gray-800">
+    <Link href="/" class="dm flex items-center gap-2 shrink-0 bg-gray-800  p-4 hover:bg-gray-500">
       <img
         alt="Man"
         src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"

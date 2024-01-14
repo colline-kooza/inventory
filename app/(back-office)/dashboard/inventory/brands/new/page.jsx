@@ -32,7 +32,7 @@ export default function Brands() {
    <div className='mx-[5rem]'>
    <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 bg-slate-50 shadow-lg">
     <div className="grid gap-4 mb-4 grid-cols-2">
-      <TextInput label="brand title" name="brand" register={register} errors={errors} type="text"/>
+      <TextInput label="brand title" name="title" register={register} errors={errors} type="text"/>
     </div>
     <SubmitButton loading={loading} buttonText="Add new brand"/>
     </form>

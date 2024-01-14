@@ -6,17 +6,7 @@ import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
 
-export default function AddInventoryForm() {
-  const branches=[
-    {
-      label:"Branch A",
-      value:"Branch A"
-    },
-    {
-      label:"Branch A",
-      value:"Main"
-    },
-  ]
+export default function AddInventoryForm({warehouse , itemsData}) {
   const [loading , setLoading]=useState(false)
     const {
         register,
@@ -26,7 +16,6 @@ export default function AddInventoryForm() {
       } = useForm()
 
    async function onSubmit(data){
-    console.log(data)
       try {
         setLoading(true)
         const response = await fetch("http://localhost:3000/api/adjustments/add",{
@@ -37,9 +26,7 @@ export default function AddInventoryForm() {
           body:JSON.stringify(data)
         })
         if (response.ok){
-          console.log(response)
          const adjustments=await response.json()
-         console.log(adjustments)
          setLoading(false)
         }
     reset()
@@ -53,22 +40,24 @@ export default function AddInventoryForm() {
    <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 shadow-lg bg-slate-100">
     <div className="grid gap-4 mb-4 grid-cols-2 ">
       <div className="col-span-2sm:col-span-1 mb-2">
-      <TextInput label="sending WareHouseId" name="sendingWareHouseId" register={register} errors={errors} type="text"/>
-
-      {/* <SelectInput className='' register={register} options={branches} errors={errors} name="sendingWareHouseId" label="select the ware house to send the stock"/> */}
+    
+    
+      <SelectInput className='' register={register} options={warehouse}  name="sendingWareHouseId" label="select the ware house to send the stock"/>
      </div>
+
      <div className="col-span-2 sm:col-span-1 mb-4">
-     <TextInput label="recieving WareHouseId" name="receivingWarehouseId" register={register} errors={errors} type="text"/>
-
-     {/* <SelectInput className='' register={register} options={branches} errors={errors} name="recievingWareHouseId" label="select the ware house to receive the stock"/> */}
-     </div>
-     <div className='col-span-2 sm:col-span-1'>
-     <TextInput label="reference number" name="referenceNumber" register={register} errors={errors} type="number"/>
+     <SelectInput className='' register={register} options={itemsData}  name="itemId" label="select the items to transfer"/>
      </div>
 
-     <div className='col-span-2 sm:col-span-1'>
-     <TextInput label="sku" name="sku" register={register} errors={errors} type="number"/>
+     <div className="col-span-2 sm:col-span-1 mb-4">
+     <SelectInput className='' register={register} options={warehouse} errors={errors} name="receivingWarehouseId" label="select the ware house to receive the stock"/>
      </div>
+     <div className='col-span-2 sm:col-span-1'>
+     <TextInput label="Qty to transfer" name="qtyNumber" register={register} errors={errors} type="number"/>
+     </div>
+
+  
+
      <div className="col-span-2">
     <TextArea errors={errors} label="Adjustments Notes" description="notes" register={register} />
      </div>   

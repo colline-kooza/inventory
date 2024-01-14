@@ -22,21 +22,20 @@ model Item {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
-  category     Category?    @relation(fields: [categoryId], references: [id], onDelete:Cascade)
+  category     Category    @relation(fields: [categoryId], references: [id], onDelete:Cascade)
   categoryId   String       @db.ObjectId
   sku          String       @unique
   barcode      String?
   qty          Int?
   unit         Unit?        @relation(fields: [unitId], references: [id])
   unitId       String       @db.ObjectId
-  brand        Brand ?     @relation(fields: [brandId], references: [id])
+  brand        Brand      @relation(fields: [brandId], references: [id])
   brandId      String       @db.ObjectId
   buyingPrice  Float
   sellingPrice Float
-  supplier     Supplier?    @relation(fields: [supplierId], references: [id])
+  supplier     Supplier    @relation(fields: [supplierId], references: [id])
   supplierId   String       @db.ObjectId
   reorderPoint Float?
-  location     String?
   images       String?
   weight       Float?
   dimensions   Float?
@@ -75,20 +74,20 @@ model Category {
 
 model Unit {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
+  title         String
   abbreviation String
   items        Item[]
 }
 
 model Brand {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
-  brand String
+  title String
   items Item[]
 }
 
 model Supplier {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
+  title          String
   email         String?
   address       String?
   contactPerson String?
@@ -97,4 +96,6 @@ model Supplier {
   taxID         String?
   notes         String?
   items         Item[]
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt")
 }

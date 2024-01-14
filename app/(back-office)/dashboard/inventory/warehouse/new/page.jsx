@@ -12,12 +12,10 @@ import ApiRequest from '@/utils/ApiRequest'
 export default function NewWareHouse() {
   const options=[
     {
-      label:"Branch",
-      value:"Branch"
+      title:"Branch",
     },
     {
-      label:"Main",
-      value:"Main"
+      title:"Main",
     },
   ]
   const [loading , setLoading]=useState(false)
@@ -29,7 +27,6 @@ export default function NewWareHouse() {
       } = useForm()
 
    async function onSubmit(data){
-    console.log(data)
     const baseUrl = 'http://localhost:3000';
     const apiUrl = `${baseUrl}/api/warehouse`;
     ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method: 'POST' });

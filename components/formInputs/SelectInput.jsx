@@ -1,19 +1,36 @@
-import React from 'react'
+import React from "react";
 
-export default function SelectInput({errors, label , name , IsRequired = true , register , type="text" , options=[]}) {
+export default function SelectInput({
+  label,
+  name,
+  register,
+  className = "sm:col-span-2",
+  options = [],
+}) {
   return (
-    <div>
- <label for={name} class="block mb-2 text-sm font-medium text-gray-900">{label} </label>
-  <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-  {
-    options.map((option , i)=>{
-        return(
-        <option {...register(`${name}`, {required:IsRequired})} type={type} key={i} value={option.label}>{option.label}</option>
-        )
-    })
-  }
-</select>
-{errors[`${name}`] && <span className='text-red-700 text-xs'>{label} is required</span>}
+    <div className={className}>
+      <label
+        htmlFor={name}
+        className="block text-sm font-medium leading-6 text-gray-900"
+      >
+        {label}
+      </label>
+      <div className="mt-2">
+        <select
+          {...register(`${name}`)}
+          id={name}
+          name={name}
+          className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+        >
+          {options?.map((option, i) => {
+            return (
+              <option key={i} value={option.id}>
+                {option.title}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </div>
-  )
+  );
 }

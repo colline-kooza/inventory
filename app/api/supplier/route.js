@@ -3,12 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     try {
-      const { name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes} =await request.json();
-      console.log({name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes});
-  
+      const { name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes} =await request.json();  
       const  supplier = await db.supplier.create({
         data: {
-            name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes
+            title:name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes
         },
       });
       return NextResponse.json(supplier);
@@ -25,4 +23,25 @@ export async function POST(request) {
       );
     }
   }
+  export async function GET(request) {
+    try {
   
+      const  supplier = await db.supplier.findMany({
+        orderBy: {
+          createdAt : "desc"  // latest supplier
+         },
+      });
+      return NextResponse.json(supplier);
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json(
+        {
+          error,
+          message: "failed to fetch supplier",
+        },
+        {
+         status: 500,
+        }
+      );
+    }
+  }

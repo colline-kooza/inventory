@@ -6,17 +6,8 @@ import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
 
-export default function TransferInventory() {
-  const branches=[
-    {
-      label:"Branch A",
-      value:"Branch A"
-    },
-    {
-      label:"Branch A",
-      value:"Main"
-    },
-  ]
+export default function TransferInventory({warehouse}) {
+
   const [loading , setLoading]=useState(false)
     const {
         register,
@@ -51,12 +42,12 @@ export default function TransferInventory() {
        <div className='mx-[5rem]'>
    <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 bg-slate-50 shadow-lg">
     <div className="grid gap-4 mb-4 grid-cols-2">
-      <TextInput label="Enter quantity of Stock to Add" name="AddStockQty" register={register} errors={errors} type="number"/>
+      <TextInput label="Enter quantity of Stock to Remove" name="AddStockQty" register={register} errors={errors} type="number"/>
       <div className="col-span-2sm:col-span-1 mb-2">
-      <SelectInput className='' register={register} options={branches} errors={errors} name="sendingWareHouseId" label="select the ware house to send the stock"/>
+      <SelectInput className='' register={register} options={warehouse} errors={errors} name="sendingWareHouseId" label="select the ware house to send the stock"/>
      </div>
      <div className="col-span-2 sm:col-span-1 mb-4">
-     <SelectInput className='' register={register} options={branches} errors={errors} name="recievingWareHouseId" label="select the ware house to receive the stock"/>
+     <SelectInput className='' register={register} options={warehouse} errors={errors} name="recievingWareHouseId" label="select the ware house to receive the stock"/>
      </div>
      <div className="col-span-2">
     <TextArea errors={errors} label="Adjustments Notes" description="notes" register={register} />

@@ -1,28 +1,39 @@
-// add.ts
 import { NextResponse } from "next/server";
 import db from "@/utils/db";
 
 export async function POST(request) {
   try {
-    const { referenceNumber,sendingWareHouseId , receivingWarehouseId, notes, itemId, quantity } = await request.json();
- console.log({ referenceNumber,sendingWareHouseId , receivingWarehouseId, notes, itemId, quantity })
-    // Retrieve the item and warehouses from the database
+    const { sendingWareHouseId, receivingWarehouseId, notes, itemId, qtyNumber } = await request.json();
+    console.log({ sendingWareHouseId, receivingWarehouseId, notes, itemId, qtyNumber });
+
     const item = await db.item.findUnique({ where: { id: itemId } });
-    const sendingWarehouse = await db.warehouse.findUnique({ where: { id: sendingWareHouseId ,} });
-    const receivingWarehouse = await db.warehouse.findUnique({ where: { id: receivingWarehouseId } });
 
-    // Update the stock quantities
-    if (item && sendingWarehouse && receivingWarehouse) {
-      const updatedSendingQty = sendingWarehouse.qty - quantity;
-      const updatedReceivingQty = receivingWarehouse.qty + quantity;
-
-      await db.warehouse.update({ where: { id: sendingWareHouseId}, data: { qty: updatedSendingQty } });
-      await db.warehouse.update({ where: { id: receivingWarehouseId }, data: { qty: updatedReceivingQty } });
-    } else {
-      throw new Error("Item or warehouses not found");
+    if (!item) {
+      throw new Error("Item not found");
     }
 
-    const adjustment = { referenceNumber,sendingWareHouseId ,receivingWarehouseId, notes, itemId, quantity };
+    const sendingWarehouse = await db.warehouse.findUnique({ where: { id: item.warehouseId } });
+    // console.log(sendingWareHouseId)
+    if (!sendingWarehouse) {
+      throw new Error("Sending warehouse not found");
+    }
+
+    const receivingWarehouse = await db.warehouse.findUnique({ where: { id: receivingWarehouseId } });
+  //  console.log(receivingWarehouse)
+    if (!receivingWarehouse) {
+      throw new Error("Receiving warehouse not found");
+    }
+
+    // Update the stock quantities
+    const updatedSendingQty = sendingWarehouse.qty - qtyNumber;
+    const updatedReceivingQty = receivingWarehouse.qty + qtyNumber;
+
+    await db.warehouse.update({ where: { id: item.warehouseId }, data: { qty: updatedSendingQty } });
+    await db.warehouse.update({ where: { id: receivingWarehouseId }, data: { qty: updatedReceivingQty } });
+
+    const adjustment = { sendingWareHouseId, receivingWarehouseId, notes, itemId, qtyNumber };
+    // console.log(adjustment);
+
     return NextResponse.json(adjustment);
   } catch (error) {
     console.error(error);
@@ -32,5 +43,5 @@ export async function POST(request) {
     }, {
       status: 500,
     });
-  } 
+  }
 }
