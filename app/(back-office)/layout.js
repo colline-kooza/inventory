@@ -5,10 +5,10 @@ import React from 'react'
 export default function Layout({children}) {
   return (
     <div className='flex min-w-full min-h-screen relative'>
-      <div className='fixed left-0 w-[19%]'>
+      <div className='z-10 fixed left-0 md:w-[80%] w-[80%] lg:w-[19%] lg:block md:block hidden'>
        <SideBar/>
       </div>
-      <main className='w-[81%]  lg:ml-[16rem] bg-gray-white px-4'>
+      <main className='lg:w-[81%] w-full lg:ml-[16rem] bg-gray-white lg:px-4'>
         <Header/>
         <div className='dm'>
           {children}

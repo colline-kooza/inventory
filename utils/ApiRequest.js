@@ -1,8 +1,6 @@
-import React from 'react';
 import toast from 'react-hot-toast';
 
-export default async function ApiRequest({ setLoading, url, data, toastName, reset, method }) {
-  console.log({ setLoading, url, data, toastName, reset, method });
+export default async function ApiRequest({ setLoading, url, data , toastName, reset, method, onSuccess }) {
   try {
     setLoading(true);
     const response = await fetch(url, {
@@ -12,10 +10,9 @@ export default async function ApiRequest({ setLoading, url, data, toastName, res
       },
       body: JSON.stringify(data),
     });
-
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
+      onSuccess?.(result);
       toast.success(`Successfully ${method === 'POST' ? 'created' : 'updated'} ${toastName}`);
       reset();
       setLoading(false);
@@ -29,4 +26,3 @@ export default async function ApiRequest({ setLoading, url, data, toastName, res
     console.error(error);
   }
 }
-

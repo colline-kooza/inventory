@@ -6,8 +6,10 @@ import TextInput from '@/components/formInputs/TextInput';
 import SubmitButton from '@/components/formInputs/SubmitButton';
 import TextArea from '@/components/formInputs/TextArea';
 import ApiRequest from '@/utils/ApiRequest';
+import { useRouter } from 'next/navigation';
 
 export default function UnitsNew() {
+  const router=useRouter()
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -23,7 +25,9 @@ export default function UnitsNew() {
       name: data.name, 
       abbreviation: data.abbreviation,
     };
-    ApiRequest({ setLoading, url: apiUrl, data: requestData, toastName: 'unit', reset, method: 'POST' });
+    ApiRequest({ setLoading, url: apiUrl, data: requestData, toastName: 'unit', reset, method: 'POST' ,onSuccess: (result) => {
+      router.push('/dashboard/inventory/units');
+    }});
   }
 
   return (

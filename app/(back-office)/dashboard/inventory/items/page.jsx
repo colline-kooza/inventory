@@ -7,7 +7,7 @@ export default async function Items() {
 
   const columns = [
     { key: 'title', label: 'Item name' },
-    { key: 'weight', label: 'Weight' },
+    { key: 'description', label: 'description' },
     { key: 'qty', label: 'Quantity' },
     { key: 'sellingPrice', label: 'Price' },
   ];

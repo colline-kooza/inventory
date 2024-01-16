@@ -1,5 +1,6 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { SiAddthis } from "react-icons/si";
 import { CgMenuGridO } from "react-icons/cg";
 import { LuUsers2 } from "react-icons/lu";
@@ -8,8 +9,8 @@ import { LuUsers2 } from "react-icons/lu";
 export default function Header() {
   return (
   <header className="bg-slate-200 ">
-    <div className="mx-auto max-w-screen-xl px-4 py-3 border-b border-slate-200  lg:py-2 sm:px-6 lg:px-8">
-      <div className="flex items-center sm:justify-between sm:gap-4">
+    <div className="mx-auto max-w-screen-xl px-1 py-3 border-b border-slate-200  lg:py-2 sm:px-6 lg:px-8">
+      <div className="flex items-center space-x-2 sm:gap-2">
         <div className="relative hidden sm:block">
           <input
             className="h-10 w-full rounded-lg border-none bg-white pe-10 ps-4 text-sm shadow-sm sm:w-56"
@@ -64,7 +65,7 @@ export default function Header() {
   
             <Link
               href="/"
-              className="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
+              className="lg:block md:block hidden shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
             >
               
               <SiAddthis size={18}/>
@@ -126,14 +127,14 @@ export default function Header() {
               />
             </svg>
           </button>
-          <Link
-              href="/"
-              className="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
+          <button
+       
+        className="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
             >
               <span className="sr-only">icon</span>
               <CgMenuGridO />
 
-            </Link>
+            </button>
         </div>
       </div>
     </div>

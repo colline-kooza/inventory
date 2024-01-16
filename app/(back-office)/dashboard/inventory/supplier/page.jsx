@@ -7,7 +7,7 @@ export default async function Categories() {
   const columns = [
     { key: 'id', label: 'suppliers  id' },
     { key: 'title', label: 'suppliers name' },
-    { key: 'description', label: 'description' },
+    { key: 'email', label: 'Email' },
 
   ];
 

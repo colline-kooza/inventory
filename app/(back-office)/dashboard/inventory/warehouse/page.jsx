@@ -14,7 +14,7 @@ export default async function WareHouse() {
 
   return (
     <div className="py-4 flex flex-col gap-4">
-    <ItemHeader title="All Suppliers" link="/dashboard/inventory/supplier/new"/>
+    <ItemHeader title="All Suppliers" link="/dashboard/inventory/warehouse/new"/>
       <DataTable data={warehouse} columns={columns} />
     </div>
   ) 

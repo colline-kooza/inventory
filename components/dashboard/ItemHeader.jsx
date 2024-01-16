@@ -18,7 +18,7 @@ export default function ItemHeader({title , link}) {
       <button
         id="dropdownDefaultButton"
         onClick={toggleDropdown}
-        className="text-slate-900 font-semibold text-lg px-5 py-2.5 text-center inline-flex items-center"
+        className="text-slate-900 font-bold text-sm lg:text-lg px-5 py-2.5 text-center inline-flex items-center"
         type="button"
       >
       {title}

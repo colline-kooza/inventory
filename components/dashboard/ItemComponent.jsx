@@ -8,9 +8,10 @@
   import SelectInput from '@/components/formInputs/SelectInput'
   import ImageUpload from '@/components/formInputs/ImageUpload'
   import ApiRequest from '@/utils/ApiRequest'
+import { useRouter } from 'next/navigation'
 
   export default function ItemComponent({categories, units , brands , warehouse ,supplier}) {
-    // console.log(categories)
+    const router = useRouter()
       const [loading , setLoading]=useState(false)
       const [imageUrl , setImageUrl]=useState()   
         const {
@@ -23,10 +24,11 @@
         const itemData={
           ...data , imageUrl 
         }
-        console.log(itemData)
         const baseUrl = 'http://localhost:3000';
         const apiUrl = `${baseUrl}/api/items`;
-        ApiRequest({ setLoading, url: apiUrl, data:itemData, toastName: 'item', reset, method: 'POST' });
+        ApiRequest({ setLoading, url: apiUrl, data:itemData, toastName: 'item', reset, method: 'POST', onSuccess: (result) => {
+          router.push('/dashboard/inventory/items');
+        } });
           }
     return (
       <div className='flex flex-col gap-2'>
@@ -35,7 +37,7 @@
         <FormHeader title="New item"/>
       </div>
     {/* form */}
-    <div className='mx-[5rem]'>
+    <div className='lg:mx-[5rem] mx-3'>
     <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-5 mt-5 bg-slate-100 shadow-lg">
     <div className="grid gap-4 mb-4 grid-cols-2 items-center">
     <div className="col-span-2">
@@ -115,7 +117,6 @@
     ""
     )
   }
-
   </form>
     </div>
       </div>

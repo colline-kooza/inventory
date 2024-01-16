@@ -6,6 +6,7 @@ import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 
 import ApiRequest from '@/utils/ApiRequest'
+import { useRouter } from 'next/navigation'
 
 export default function Brands() {
   const [loading , setLoading]=useState(false)
@@ -15,12 +16,13 @@ export default function Brands() {
         reset,
         formState: { errors },
       } = useForm()
-
-   async function onSubmit(data){
+     const router=useRouter()
+    async function onSubmit(data){
     const baseUrl = 'http://localhost:3000';
     const apiUrl = `${baseUrl}/api/brands`;
-    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'brand', reset, method: 'POST' });
-
+    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'brand', reset, method: 'POST' ,onSuccess: (result) => {
+      router.push('/dashboard/inventory/brands');
+    } });
       }
   return (
     <div className='flex flex-col gap-2'>

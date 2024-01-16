@@ -8,8 +8,10 @@ import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
 // import toast from 'react-hot-toast'
 import ApiRequest from '@/utils/ApiRequest'
+import { useRouter } from 'next/navigation'
 
 export default function NewSupplierNew() {
+  const router=useRouter()
   const options=[
     {
       label:"Branch",
@@ -28,11 +30,12 @@ export default function NewSupplierNew() {
         formState: { errors },
       } = useForm()
 
-   async function onSubmit(data){
-const baseUrl = 'http://localhost:3000';
-const apiUrl = `${baseUrl}/api/supplier`;
-ApiRequest({ setLoading, url: apiUrl, data, toastName: 'supplier', reset, method: 'POST' });
-
+     async function onSubmit(data){
+     const baseUrl = 'http://localhost:3000';
+     const apiUrl = `${baseUrl}/api/supplier`;
+     ApiRequest({ setLoading, url: apiUrl, data, toastName: 'supplier', reset, method: 'POST',onSuccess: (result) => {
+     router.push('/dashboard/inventory/supplier');
+    } });
       }
   return (
     <div className='flex flex-col gap-2'>

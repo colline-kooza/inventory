@@ -6,10 +6,11 @@ import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
-import toast from 'react-hot-toast'
 import ApiRequest from '@/utils/ApiRequest'
+import { useRouter } from 'next/navigation'
 
 export default function NewWareHouse() {
+  const router=useRouter()
   const options=[
     {
       title:"Branch",
@@ -29,7 +30,9 @@ export default function NewWareHouse() {
    async function onSubmit(data){
     const baseUrl = 'http://localhost:3000';
     const apiUrl = `${baseUrl}/api/warehouse`;
-    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method: 'POST' });
+    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method: 'POST' , onSuccess: (result) => {
+      router.push('/dashboard/inventory/warehouse');
+    } });
      
       }
   return (

@@ -77,12 +77,16 @@ model Unit {
   title         String
   abbreviation String
   items        Item[]
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt")
 }
 
 model Brand {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   items Item[]
+  createdAt           DateTime   @default(now()) @map("createdAt") 
+  updatedAt           DateTime   @updatedAt @map("updatedAt")
 }
 
 model Supplier {
