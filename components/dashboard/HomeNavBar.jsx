@@ -23,7 +23,7 @@ export default function HomeNavBar() {
     </div>  
     </div>  
     {/* links */}
-<div className=" border-b border-slate-100 min-w-full overflow-x-auto">
+<div className=" border-b border-slate-100 min-w-full overflow-x-auto text-slate-900">
   <div className='dm text-sm flex gap-4 lg:gap-8 p-3  font-[400px] sticky top-0  z-10 '>
     <Link href="/dashboard/home/overview" className="relative group">
       Dashboard

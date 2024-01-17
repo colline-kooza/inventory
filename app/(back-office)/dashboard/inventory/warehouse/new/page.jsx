@@ -9,7 +9,7 @@ import SelectInput from '@/components/formInputs/SelectInput'
 import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
 
-export default function NewWareHouse() {
+export default function NewWareHouse({initialData , isUpdate}) {
   const router=useRouter()
   const options=[
     {
@@ -25,21 +25,30 @@ export default function NewWareHouse() {
         handleSubmit,
         reset,
         formState: { errors },
-      } = useForm()
+      } = useForm({
+        defaultValues:{
+          ...initialData
+        }
+      })
 
    async function onSubmit(data){
+  try {
+    const method = isUpdate ? "PUT":"POST"
     const baseUrl = 'http://localhost:3000';
-    const apiUrl = `${baseUrl}/api/warehouse`;
-    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method: 'POST' , onSuccess: (result) => {
+    const apiUrl =isUpdate? `${baseUrl}/api/warehouse/${initialData.id}`: `${baseUrl}/api/warehouse`
+    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method , onSuccess: (result) => {
       router.push('/dashboard/inventory/warehouse');
     } });
      
+  } catch (error) {
+    
+  }
       }
   return (
     <div className='flex flex-col gap-2'>
       {/* head*/}
       <div className=''>
-       <FormHeader title="New Ware House"/>
+       <FormHeader title="Ware House"/>
      </div>
    {/* form */}
    <div className='mx-[5rem]'>
@@ -50,7 +59,12 @@ export default function NewWareHouse() {
     <TextArea errors={errors} label="warehouse description"  description="description" register={register} /> 
     <SelectInput register={register} options={options} errors={errors} name="type" label="select ware house type"/>
     </div>
-    <SubmitButton loading={loading} buttonText="Add new warehouse"/>
+    {
+      isUpdate?(<SubmitButton loading={loading} buttonText="update warehouse"/>
+      ):(
+        <SubmitButton loading={loading} buttonText="Add new warehouse"/>
+      )
+    }
     </form>
   </div>
     </div>

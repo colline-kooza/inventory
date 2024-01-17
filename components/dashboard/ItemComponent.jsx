@@ -10,7 +10,7 @@
   import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
 
-  export default function ItemComponent({categories, units , brands , warehouse ,supplier}) {
+  export default function ItemComponent({categories, units , brands , warehouse ,supplier , initialData ,isUpdate}) {
     const router = useRouter()
       const [loading , setLoading]=useState(false)
       const [imageUrl , setImageUrl]=useState()   
@@ -19,22 +19,43 @@ import { useRouter } from 'next/navigation'
             handleSubmit,
             reset,
             formState: { errors },
-        } = useForm()
-      async function onSubmit(data){
-        const itemData={
-          ...data , imageUrl 
-        }
+        } = useForm({
+          defaultValues: initialData,
+        })
+        async function onSubmit(data) {
+      try {
+        const itemData = {
+          ...data,
+          imageUrl,
+        };
         const baseUrl = 'http://localhost:3000';
-        const apiUrl = `${baseUrl}/api/items`;
-        ApiRequest({ setLoading, url: apiUrl, data:itemData, toastName: 'item', reset, method: 'POST', onSuccess: (result) => {
-          router.push('/dashboard/inventory/items');
-        } });
-          }
+        const apiUrl = isUpdate
+        ? `${baseUrl}/api/items/${initialData.id}` 
+        : `${baseUrl}/api/items`;
+    
+        const method = isUpdate ? 'PUT' : 'POST';
+    
+        ApiRequest({
+          setLoading,
+          url: apiUrl,
+          data: itemData,
+          toastName: 'item',
+          reset,
+          method,
+          onSuccess: (result) => {
+            router.push('/dashboard/inventory/items');
+          },
+        });
+      } catch (error) {
+        console.log(error)
+      }
+        }
+      
     return (
       <div className='flex flex-col gap-2'>
         {/* head*/}
         <div className=''>
-        <FormHeader title="New item"/>
+        <FormHeader title={isUpdate ? 'Update Item' : 'New Item'} />
       </div>
     {/* form */}
     <div className='lg:mx-[5rem] mx-3'>
@@ -66,7 +87,7 @@ import { useRouter } from 'next/navigation'
     </div>
 
     <div className="col-span-2 sm:col-span-1 mb-4">
-      <TextInput label="Re-Order Point" name="reOrderPoint" register={register} errors={errors} type="number" />
+      <TextInput IsRequired={false} label="Re-Order Point" name="reOrderPoint" register={register} errors={errors} type="number" />
     </div>
 
     <div className="col-span-2 sm:col-span-1 mb-4">
@@ -112,8 +133,8 @@ import { useRouter } from 'next/navigation'
   <ImageUpload label="item image" endpoint="imageUploader"  imageUrl={imageUrl} setImageUrl={setImageUrl}/>
   {
     imageUrl ? (
-      <SubmitButton loading={loading} buttonText="Add new item" />
-    ) : (
+      <SubmitButton loading={loading} buttonText={isUpdate ? 'Update Item' : 'Add New Item'} />
+      ) : (
     ""
     )
   }

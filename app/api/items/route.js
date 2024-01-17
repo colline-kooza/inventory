@@ -76,7 +76,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         error,
-        message: "failed to fetch itemss",
+        message: "failed to fetch items",
       },
       {
        status: 500,

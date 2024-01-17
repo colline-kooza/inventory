@@ -9,6 +9,7 @@ export async function POST(request) {
             title:name , phone ,email ,address , contactPerson ,supplierCode ,paymentTerms ,taxID ,notes
         },
       });
+      console.log(supplier)
       return NextResponse.json(supplier);
     } catch (error) {
       console.log(error);

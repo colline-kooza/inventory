@@ -4,7 +4,6 @@ import getData from "@/utils/getData";
 
 export default async function Brands() {
   const brands = await getData("brands");
-  console.log(brands);
 
   const columns = [
     { key: 'id', label: 'Brand id' },
@@ -14,7 +13,7 @@ export default async function Brands() {
   return (
     <div className="py-4 flex flex-col gap-4">
       <ItemHeader title="All Brands" link="/dashboard/inventory/brands/new" />
-      <DataTable data={brands} columns={columns} />
+      <DataTable resourceName="brands" data={brands} columns={columns} />
     </div>
   );
 }

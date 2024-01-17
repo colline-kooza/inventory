@@ -14,7 +14,7 @@ export default async function Categories() {
   return (
     <div className="py-4 flex flex-col gap-4">
     <ItemHeader title="All Suppliers" link="/dashboard/inventory/supplier/new"/>
-      <DataTable data={suppliers} columns={columns} />
+      <DataTable resourceName="supplier"  data={suppliers} columns={columns} />
     </div>
   ) 
 }

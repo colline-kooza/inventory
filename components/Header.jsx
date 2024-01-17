@@ -6,7 +6,7 @@ import { CgMenuGridO } from "react-icons/cg";
 import { LuUsers2 } from "react-icons/lu";
 
 
-export default function Header() {
+export default function Header({ toggleSidebar }) {
   return (
   <header className="bg-slate-200 ">
     <div className="mx-auto max-w-screen-xl px-1 py-3 border-b border-slate-200  lg:py-2 sm:px-6 lg:px-8">
@@ -101,7 +101,7 @@ export default function Header() {
            
           </div>
   
-          <button type="button" className="group flex shrink-0 items-center rounded-lg transition">
+          <button type="button" className="group flex shrink-0 items-center rounded-lg transition ">
             <img
               alt="Man"
               src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
@@ -128,13 +128,12 @@ export default function Header() {
             </svg>
           </button>
           <button
-       
-        className="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-            >
-              <span className="sr-only">icon</span>
-              <CgMenuGridO />
-
-            </button>
+          onClick={toggleSidebar}
+          className="mr-5 block lg:hidden shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
+        >
+          <span className="sr-only">icon</span>
+          <CgMenuGridO />
+        </button>
         </div>
       </div>
     </div>

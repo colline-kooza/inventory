@@ -14,7 +14,7 @@ export default async function Units() {
   return (
     <div className="py-4 flex flex-col gap-4">
      <ItemHeader title="All Units" link="/dashboard/inventory/units/new"/>
-      <DataTable data={ units} columns={columns} />
+      <DataTable resourceName="units" data={ units} columns={columns} />
     </div>
   ) 
 }

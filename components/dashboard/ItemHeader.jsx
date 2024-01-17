@@ -14,7 +14,7 @@ export default function ItemHeader({title , link}) {
   };
   return (
    <div className='flex items-center justify-between'>
-     <div className="relative">
+     <div className="">
       <button
         id="dropdownDefaultButton"
         onClick={toggleDropdown}
@@ -42,7 +42,7 @@ export default function ItemHeader({title , link}) {
       {isOpen && (
         <div
           id="dropdown"
-          className="absolute z-10 bg-white shadow-md divide-y divide-gray-100 rounded-lg  w-44 text-gray-600"
+          className="z-10 bg-white shadow-md divide-y divide-gray-100 rounded-lg  w-44 text-gray-600"
         >
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
             <li>
@@ -100,7 +100,7 @@ export default function ItemHeader({title , link}) {
             </Link>
            <Link
               href="/"
-              className="items-center flex block shrink-0 rounded-lg shadow-md bg-white p-2.5 text-gray-600 hover:text-gray-700"
+              className="items-center flex block shrink-0 rounded-lg shadow-md bg-white p-2.5 text-gray-600 hover:text-gray-700 mr-7"
             >
               <span className="sr-only">icon</span>
               <BsQuestion />

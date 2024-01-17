@@ -8,7 +8,7 @@ import TextArea from '@/components/formInputs/TextArea';
 import ApiRequest from '@/utils/ApiRequest';
 import { useRouter } from 'next/navigation';
 
-export default function UnitsNew() {
+export default function UnitsNew({initialData , isUpdate}) {
   const router=useRouter()
   const [loading, setLoading] = useState(false);
   const {
@@ -16,18 +16,27 @@ export default function UnitsNew() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      ...initialData
+    }
+  });
 
   async function onSubmit(data) {
-    const baseUrl = 'http://localhost:3000';
-    const apiUrl = `${baseUrl}/api/units`;
-    const requestData = {
-      name: data.name, 
-      abbreviation: data.abbreviation,
-    };
-    ApiRequest({ setLoading, url: apiUrl, data: requestData, toastName: 'unit', reset, method: 'POST' ,onSuccess: (result) => {
-      router.push('/dashboard/inventory/units');
-    }});
+try {
+  const baseUrl = 'http://localhost:3000';
+  const method = isUpdate ? "PUT" : "POST"
+  const apiUrl =isUpdate? `${baseUrl}/api/units/${initialData.id}`:`${baseUrl}/api/units`
+  const requestData = {
+    name: data.name, 
+    abbreviation: data.abbreviation,
+  };
+  ApiRequest({ setLoading, url: apiUrl, data: requestData, toastName: 'unit', reset, method  ,onSuccess: (result) => {
+    router.push('/dashboard/inventory/units');
+  }});
+} catch (error) {
+  console.log(error)
+}
   }
 
   return (
@@ -41,8 +50,11 @@ export default function UnitsNew() {
             <TextInput label="unit title" name="name" register={register} errors={errors} type="text" />
             <TextArea errors={errors} label="Unit abbreviation" description="abbreviation" register={register} />
           </div>
-          <SubmitButton loading={loading} buttonText="Add new Unit" />
-        </form>
+{
+  isUpdate ? (          <SubmitButton loading={loading} buttonText="update Unit" />
+  ):(          <SubmitButton loading={loading} buttonText="Add new Unit" />
+  )
+}        </form>
       </div>
     </div>
   );

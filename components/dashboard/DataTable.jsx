@@ -1,8 +1,9 @@
 import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
+import Link from 'next/link';
 
-export default function DataTable({ data, columns }) {
+export default function DataTable({ data, columns , resourceName }) {
   // const handleEdit = (id) => {
   //   // Add logic for handling the edit action here
   //   console.log(`Edit action clicked for item with id ${id}`);
@@ -14,12 +15,12 @@ export default function DataTable({ data, columns }) {
   // };
 
   return (
-    <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-400">
+    <div className=" overflow-x-auto lg:shadow-lg sm:rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-400  ">
         <thead className="text-xs text-slate-800 font-bold uppercase bg-slate-200 border-b border-slate-500">
           <tr>
             {columns.map((column) => (
-              <th key={column.key} scope="col" className="px-6 py-3">
+              <th key={column.key} scope="col" className="px-6 py-3 flex-shrink-0">
                 {column.label}
               </th>
             ))}
@@ -44,12 +45,12 @@ export default function DataTable({ data, columns }) {
                 </td>
               ))}
               <td className="px-6 py-4 flex space-x-6">
-                <button
+                <Link href={`/dashboard/inventory/${resourceName }/update/${item.id}`}
                   // onClick={() => handleEdit(item.id)}
                   className="shrink-0 font-medium flex gap-1 items-center text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   <FaRegEdit size={16} /> Edit
-                </button>
+                </Link>
                 <button
                   // onClick={() => handleDelete(item.id)}
                   className="shrink-0 text-red-600 font-bold hover:underline flex gap-1 items-center"

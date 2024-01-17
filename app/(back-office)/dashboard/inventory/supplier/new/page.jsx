@@ -5,12 +5,11 @@ import FormHeader from '@/components/dashboard/FormHeader'
 import TextInput from '@/components/formInputs/TextInput'
 import SubmitButton from '@/components/formInputs/SubmitButton'
 import TextArea from '@/components/formInputs/TextArea'
-import SelectInput from '@/components/formInputs/SelectInput'
-// import toast from 'react-hot-toast'
 import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
 
-export default function NewSupplierNew() {
+export default function NewSupplierNew({initialData , isUpdate}) {
+  // console.log(initialData , isUpdate)
   const router=useRouter()
   const options=[
     {
@@ -28,12 +27,17 @@ export default function NewSupplierNew() {
         handleSubmit,
         reset,
         formState: { errors },
-      } = useForm()
+      } = useForm({
+        defaultValues:{
+          ...initialData,
+        }
+      })
 
      async function onSubmit(data){
+      const method=isUpdate?"PUT":"POST"
      const baseUrl = 'http://localhost:3000';
-     const apiUrl = `${baseUrl}/api/supplier`;
-     ApiRequest({ setLoading, url: apiUrl, data, toastName: 'supplier', reset, method: 'POST',onSuccess: (result) => {
+     const apiUrl = isUpdate ?`${baseUrl}/api/supplier/${initialData.id}`:`${baseUrl}/api/supplier`
+     ApiRequest({ setLoading, url: apiUrl, data, toastName: 'supplier', reset, method ,onSuccess: (result) => {
      router.push('/dashboard/inventory/supplier');
     } });
       }
@@ -41,7 +45,7 @@ export default function NewSupplierNew() {
     <div className='flex flex-col gap-2'>
       {/* head*/}
       <div className=''>
-       <FormHeader title="New Supplier"/>
+       <FormHeader title="Supplier"/>
      </div>
    {/* form */}
    <div className='mx-[5rem]'>
@@ -79,7 +83,11 @@ export default function NewSupplierNew() {
        <TextArea errors={errors} label="Supplier Notes" description="notes" register={register} />
         </div>
     </div>
-    <SubmitButton loading={loading} buttonText="Add new supplier"/>
+   {
+    isUpdate?( <SubmitButton loading={loading} buttonText="update supplier"/>):(
+      <SubmitButton loading={loading} buttonText="Add new supplier"/>
+    )
+   }
     </form>
   </div>
     </div>

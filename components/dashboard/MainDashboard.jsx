@@ -48,7 +48,7 @@ export default function MainDashboard() {
     <div>
      <div class="p-4 ">
    <div class="w-full  dm p-4 border-[1px] border-gray-300  rounded-lg ">
-      <div class="flex min-w-full gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 min-w-full gap-4 mb-4">
          <div class="min-w-[70%] flex flex-col gap-4 min-h-24 rounded p-2">
           <h2 className='text-black font-semibold dm'>Sales Activity</h2>
       <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">

@@ -15,7 +15,7 @@ export default async function Items() {
   return (
     <div className="py-4 flex flex-col gap-4">
       <ItemHeader title="All items" link="/dashboard/inventory/items/new" />
-      <DataTable data={items} columns={columns} />
+      <DataTable resourceName="items" data={items} columns={columns} />
     </div>
   ) 
 }

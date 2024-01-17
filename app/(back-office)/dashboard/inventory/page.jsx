@@ -67,8 +67,8 @@ export default function Inventory() {
   return (
     <div className='py-3'>
       <ItemHeader title="Inventory " link="/dashboard/inventory/"/>
-      <div className='px-[3rem]'>
-        <div  className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 min-w-full min-h-screen p-5  gap-8'>
+      <div className='lg:px-[3rem]'>
+        <div  className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 min-w-full min-h-screen p-5 gap-4 lg:gap-8'>
           {
             cardData.map((item , i)=>{
               return(
