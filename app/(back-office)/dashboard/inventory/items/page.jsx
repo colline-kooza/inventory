@@ -10,6 +10,7 @@ export default async function Items() {
     { key: 'description', label: 'description' },
     { key: 'qty', label: 'Quantity' },
     { key: 'sellingPrice', label: 'Price' },
+    { key: 'createdAt', label: 'created Time' },
   ];
 
   return (

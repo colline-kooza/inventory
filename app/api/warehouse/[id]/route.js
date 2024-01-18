@@ -50,3 +50,25 @@ export async function PUT(request , {params:{id}}) {
       );
     }
 }
+export async function DELETE(request , {params : {id}}){
+  try {
+  const warehouse=await db.warehouse.delete({
+    where :{
+      id
+    },
+   
+  })
+  return NextResponse.json(warehouse)
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: 'Failed to delete warehouse',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

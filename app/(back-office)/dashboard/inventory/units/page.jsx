@@ -8,7 +8,7 @@ export default async function Units() {
   const columns = [
     { key: 'id', label: 'unit id' },
     { key: 'title', label: 'unit name' },
-
+    { key: 'createdAt', label: 'created Time' },
   ];
 
   return (

@@ -8,7 +8,7 @@ export default async function Categories() {
     { key: 'id', label: 'suppliers  id' },
     { key: 'title', label: 'suppliers name' },
     { key: 'email', label: 'Email' },
-
+    { key: 'createdAt', label: 'created Time' },
   ];
 
   return (

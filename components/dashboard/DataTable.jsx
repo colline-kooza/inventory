@@ -2,21 +2,13 @@ import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import Link from 'next/link';
+import { GrFormViewHide } from 'react-icons/gr';
+import DeteleBtn from './DeteleBtn';
 
-export default function DataTable({ data, columns , resourceName }) {
-  // const handleEdit = (id) => {
-  //   // Add logic for handling the edit action here
-  //   console.log(`Edit action clicked for item with id ${id}`);
-  // };
-
-  // const handleDelete = (id) => {
-  //   // Add logic for handling the delete action here
-  //   console.log(`Delete action clicked for item with id ${id}`);
-  // };
-
+export default function DataTable({ data, columns, resourceName }) {
   return (
-    <div className=" overflow-x-auto lg:shadow-lg sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-400  ">
+    <div className="overflow-x-auto lg:shadow-lg sm:rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-400">
         <thead className="text-xs text-slate-800 font-bold uppercase bg-slate-200 border-b border-slate-500">
           <tr>
             {columns.map((column) => (
@@ -39,24 +31,30 @@ export default function DataTable({ data, columns , resourceName }) {
             >
               {columns.map((column) => (
                 <td key={column.key} className="px-6 py-4">
-                <div className='line-clamp-1'>
-                {item[column.key]}
-                </div>
+                  <div className='line-clamp-1'>
+                    {column.key === 'createdAt' || column.key === 'updatedAt' ? new Date(item[column.key]).toLocaleString() : item[column.key]}
+                  </div>
                 </td>
               ))}
               <td className="px-6 py-4 flex space-x-6">
-                <Link href={`/dashboard/inventory/${resourceName }/update/${item.id}`}
-                  // onClick={() => handleEdit(item.id)}
+                <Link
+                  href={`/dashboard/inventory/${resourceName}/update/${item.id}`}
                   className="shrink-0 font-medium flex gap-1 items-center text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   <FaRegEdit size={16} /> Edit
                 </Link>
-                <button
-                  // onClick={() => handleDelete(item.id)}
-                  className="shrink-0 text-red-600 font-bold hover:underline flex gap-1 items-center"
-                >
-                  <RiDeleteBin6Line size={16} /> Delete
-                </button>
+              <DeteleBtn endpoint={resourceName} id={item.id}/>
+             
+                {
+                  resourceName === "items"?(
+                    <Link
+                    href={`/dashboard/inventory/${resourceName}/view/${item.id}`}
+                    className="shrink-0 font-medium flex gap-1 items-center text-green-600 dark:text-green-600 hover:underline"
+                  >
+                  <GrFormViewHide size={16}/> View
+                  </Link>
+                  ):""
+                }
               </td>
             </tr>
           ))}

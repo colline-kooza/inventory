@@ -10,7 +10,7 @@ export default async function Categories() {
     { key: 'id', label: 'category id' },
     { key: 'title', label: 'category name' },
     { key: 'description', label: 'description' },
-
+    { key: 'createdAt', label: 'created Time' },
   ];
 
   return (

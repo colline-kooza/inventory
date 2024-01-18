@@ -9,7 +9,6 @@ export default async function WareHouse() {
     { key: 'id', label: 'warehouse id' },
     { key: 'title', label: 'warehouse name' },
     { key: 'description', label: 'description' },
-
   ];
 
   return (

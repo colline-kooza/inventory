@@ -8,6 +8,7 @@ export default async function Brands() {
   const columns = [
     { key: 'id', label: 'Brand id' },
     { key: 'title', label: 'Brand name' },
+    { key: 'createdAt', label: 'created Time' },
   ];
 
   return (

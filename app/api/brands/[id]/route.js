@@ -53,3 +53,27 @@ export async function PUT(request , {params:{id}}) {
       );
     }
 }
+
+
+export async function DELETE(request , {params : {id}}){
+  try {
+  const brand =await db.brand.delete({
+    where :{
+      id
+    },
+   
+  })
+  return NextResponse.json(brand)
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: 'Failed to delete brand',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

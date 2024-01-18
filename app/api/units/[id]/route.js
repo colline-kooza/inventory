@@ -44,3 +44,25 @@ export async function PUT(request , {params:{id}}){
       })
   }
 }
+export async function DELETE(request , {params : {id}}){
+  try {
+  const unit=await db.unit.delete({
+    where :{
+      id
+    },
+   
+  })
+  return NextResponse.json(unit)
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: 'Failed to delete unit',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

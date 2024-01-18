@@ -1,29 +1,37 @@
 import db from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request , {params:{id}}) {
-    try {
-      const  item = await db.item.findUnique(
-        {
-            where:{
-                id
-            }
-        }
-      );
-      return NextResponse.json(item);
-    } catch (error) {
-      console.log(error);
-      return NextResponse.json(
-        {
-          error,
-          message: "failed to fetch item",
-        },
-        {
-         status: 500,
-        }
-      );
-    }
+export async function GET(request, { params: { id } }) {
+  try {
+    const item = await db.item.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        category: true,
+        unit: true,
+        brand: true,
+        supplier: true,
+        warehouse: true,
+        // Add other related models as needed
+      },
+    });
+
+    return NextResponse.json(item);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: "failed to fetch item",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
+
 
 export async function PUT(request, { params: { id } }) {
   try {
@@ -84,6 +92,28 @@ export async function PUT(request, { params: { id } }) {
       {
         error,
         message: 'Failed to update item',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+export async function DELETE(request , {params : {id}}){
+  try {
+  const item=await db.item.delete({
+    where :{
+      id
+    },
+   
+  })
+  return NextResponse.json(item)
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: 'Failed to delete item',
       },
       {
         status: 500,

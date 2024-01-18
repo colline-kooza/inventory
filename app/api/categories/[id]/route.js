@@ -51,3 +51,27 @@ export async function PUT(request , {params : {id}}){
     );
   }
 }
+
+
+export async function DELETE(request , {params : {id}}){
+  try {
+  const Category =await db.category.delete({
+    where :{
+      id
+    },
+   
+  })
+  return NextResponse.json(Category)
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: 'Failed to delete category',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
