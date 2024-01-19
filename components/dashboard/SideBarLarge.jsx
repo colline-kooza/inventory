@@ -1,15 +1,20 @@
 "use client"
 import Link from 'next/link';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { MdOutlineInventory, MdOutlineInventory2 } from "react-icons/md";
 import { IoAddCircleOutline, IoCartOutline, IoHomeOutline } from "react-icons/io5";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { VscGraph } from "react-icons/vsc";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { GrIntegration } from "react-icons/gr";
+import { useSession } from 'next-auth/react';
 
 export default function SideBarLarge() {
-
+  const { data: session, status} = useSession()
+  const [popupVisible, setPopupVisible] = useState(false);
+    const handleInitialClick = () => {
+      setPopupVisible(!popupVisible);
+    };
   const salesLink=[
     {
       title:"customers",
@@ -276,23 +281,48 @@ export default function SideBarLarge() {
     </ul>
   </div>
 
-  <div class="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
-    <Link href="/" class="dm flex items-center gap-2 shrink-0 bg-gray-800  p-4 hover:bg-gray-500">
-      <img
-        alt="Man"
-        src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-        class="h-10 w-10 rounded-full object-cover"
-      />
+ {
+  status=="loading"?(<span class="loader2"></span>):(
+    <div class="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
+    <button onClick={handleInitialClick} class="dm flex items-center gap-2 shrink-0 bg-gray-800  p-4 hover:bg-gray-500 w-full">
+    <h2 className="h-10 w-10 rounded-full object-cover bg-blue-500 flex justify-center items-center text-2xl text-white font-bold">{session.user.name[0]}</h2>
 
       <div className='text-gray-100'>
         <p class="text-xs">
-          <strong class="block text-gray-100 font-medium">Eric Frusciante</strong>
+          <strong class="block text-gray-100 font-medium">{session?.user.name}</strong>
 
-          <span> eric@frusciante.com </span>
+          <span>{session?.user.email}</span>
         </p>
       </div>
-    </Link>
+    </button>
   </div>
+  )
+ }
+ 
+ {popupVisible && status === 'authenticated' && (
+        <div className="z-30 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <div className=" p-4 rounded-lg flex gap-2 items-center justify-center flex-col w-[90%] lg:w-[30%]">
+          
+
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex justify-end px-4 pt-4">
+    
+   
+    </div>
+    <div class="flex flex-col items-center pb-10">
+    <h2 className="text-center h-20 w-20 rounded-full object-cover bg-blue-500 flex justify-center items-center text-5xl text-white font-bold mb-4">{session.user.name[0]}</h2>
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{session.user.name}</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{session.user.email}</span>
+        <div class="flex mt-4 md:mt-6">
+            <button onClick={handleInitialClick}
+  class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Return</button>
+            <button onClick={()=>signOut()} class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Log Out</button>
+        </div>
+    </div>
+</div>
+          </div>
+        </div>
+             )}
 </div>  
 </div>
   )

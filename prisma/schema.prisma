@@ -7,6 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String @unique
+  password       String
+  createdAt      DateTime   @default(now()) @map("createdAt")
+  updatedAt      DateTime   @updatedAt @map("updatedAt")
+  itemsCreated      Item[]
+  adjustmentsCreated Adjustment[] @relation(name: "CreatedByAdjustment")
+  warehousesOwned   Warehouse[]
+}
+
 model Warehouse {
   id                   String       @id @default(auto()) @map("_id") @db.ObjectId
   title                String
@@ -16,24 +28,28 @@ model Warehouse {
   sendingAdjustments   Adjustment[] @relation(name: "SendingWarehouse")
   receivingAdjustments Adjustment[] @relation(name: "ReceivingWarehouse")
   items                Item[]
+  owner                User         @relation(fields: [ownerId], references: [id])
+  ownerId              String       @db.ObjectId
+  createdAt            DateTime     @default(now()) @map("createdAt")
+  updatedAt            DateTime     @updatedAt @map("updatedAt")
 }
 
 model Item {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
-  category     Category    @relation(fields: [categoryId], references: [id], onDelete:Cascade)
+  category     Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   String       @db.ObjectId
   sku          String       @unique
   barcode      String?
   qty          Int?
   unit         Unit?        @relation(fields: [unitId], references: [id])
   unitId       String       @db.ObjectId
-  brand        Brand      @relation(fields: [brandId], references: [id])
+  brand        Brand        @relation(fields: [brandId], references: [id])
   brandId      String       @db.ObjectId
   buyingPrice  Float
   sellingPrice Float
-  supplier     Supplier    @relation(fields: [supplierId], references: [id])
+  supplier     Supplier     @relation(fields: [supplierId], references: [id])
   supplierId   String       @db.ObjectId
   reorderPoint Float?
   images       String?
@@ -44,8 +60,10 @@ model Item {
   warehouse    Warehouse    @relation(fields: [warehouseId], references: [id])
   warehouseId  String       @db.ObjectId
   Adjustment   Adjustment[]
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt") 
+  createdAt    DateTime     @default(now()) @map("createdAt")
+  updatedAt    DateTime     @updatedAt @map("updatedAt")
+  createdBy    User         @relation(fields: [createdById], references: [id])
+  createdById  String       @db.ObjectId
 }
 
 model Adjustment {
@@ -59,47 +77,50 @@ model Adjustment {
   quantity             Int
   item                 Item      @relation(fields: [itemId], references: [id])
   itemId               String    @db.ObjectId
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt") 
+  createdAt            DateTime  @default(now()) @map("createdAt")
+  updatedAt            DateTime  @updatedAt @map("updatedAt")
+
+  createdBy            User      @relation(name: "CreatedByAdjustment", fields: [createdById], references: [id])
+  createdById          String    @db.ObjectId
 }
 
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String?
   items       Item[]
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
 }
 
 model Unit {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
   abbreviation String
   items        Item[]
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt")
+  createdAt    DateTime @default(now()) @map("createdAt")
+  updatedAt    DateTime @updatedAt @map("updatedAt")
 }
 
 model Brand {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  id    String   @id @default(auto()) @map("_id") @db.ObjectId
   title String
   items Item[]
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
 }
 
 model Supplier {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  title          String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
   email         String?
   address       String?
   contactPerson String?
-  supplierCode  String  @unique
+  supplierCode  String   @unique
   paymentTerms  String?
   taxID         String?
   notes         String?
   items         Item[]
-  createdAt           DateTime   @default(now()) @map("createdAt") 
-  updatedAt           DateTime   @updatedAt @map("updatedAt")
+  createdAt     DateTime @default(now()) @map("createdAt")
+  updatedAt     DateTime @updatedAt @map("updatedAt")
 }

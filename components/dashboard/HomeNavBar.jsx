@@ -1,4 +1,5 @@
 "use client"
+import { useSession } from 'next-auth/react';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -6,6 +7,8 @@ import { LiaCopySolid } from "react-icons/lia";
 
 export default function HomeNavBar() {
   const pathName= usePathname()
+  const {data:session , status}=useSession()
+  console.log({session , status})
   return (
     <div className='flex flex-col gap-1 p-2 bg-gray-100 border-b border-slate-300'>
         <div className='p-4 flex items-center gap-2'>
@@ -16,9 +19,9 @@ export default function HomeNavBar() {
               <LiaCopySolid size={19}/>
             </Link>
        <div class="">
-      <h1 class="text-[16px] tracking-[.4px] font-bold text-gray-900 ">KOOZA COLLINZ, DEV!</h1>
+      <h1 class="text-[16px] tracking-[.4px] font-bold text-gray-900 ">{session.user.name}!</h1>
       <p class=" text-sm text-gray-500">
-        Your website 
+        {session.user.email}
       </p>
     </div>  
     </div>  

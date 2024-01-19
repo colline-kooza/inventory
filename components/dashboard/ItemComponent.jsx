@@ -9,8 +9,11 @@
   import ImageUpload from '@/components/formInputs/ImageUpload'
   import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
   export default function ItemComponent({categories, units , brands , warehouse ,supplier , initialData ,isUpdate}) {
+    const { data: session } = useSession();
+    
     const router = useRouter()
       const [loading , setLoading]=useState(false)
       const [imageUrl , setImageUrl]=useState()   
@@ -27,6 +30,7 @@ import { useRouter } from 'next/navigation'
         const itemData = {
           ...data,
           imageUrl,
+          createdBy: session?.user?.id, 
         };
         const baseUrl = 'http://localhost:3000';
         const apiUrl = isUpdate

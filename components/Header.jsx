@@ -4,11 +4,18 @@ import React, { useState } from 'react'
 import { SiAddthis } from "react-icons/si";
 import { CgMenuGridO } from "react-icons/cg";
 import { LuUsers2 } from "react-icons/lu";
+import { signOut, useSession } from 'next-auth/react';
 
 
 export default function Header({ toggleSidebar }) {
+  const { data: session, status} = useSession()
+  const [popupVisible, setPopupVisible] = useState(false);
+    const handleInitialClick = () => {
+      setPopupVisible(!popupVisible);
+    };
   return (
   <header className="bg-slate-200 ">
+
     <div className="mx-auto max-w-screen-xl px-1 py-3 border-b border-slate-200  lg:py-2 sm:px-6 lg:px-8">
       <div className="flex items-center space-x-2 sm:gap-2">
         <div className="relative hidden sm:block">
@@ -100,18 +107,15 @@ export default function Header({ toggleSidebar }) {
             </Link>
            
           </div>
-  
-          <button type="button" className="group flex shrink-0 items-center rounded-lg transition ">
-            <img
-              alt="Man"
-              src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-              className="h-10 w-10 rounded-full object-cover"
-            />
-  
+          {
+  status=="loading"?(<span class="loader2"></span>):(
+    <button  onClick={handleInitialClick}
+    type="button" className="group flex shrink-0 items-center rounded-lg transition ">
+          <h2 className="h-10 w-10 rounded-full object-cover bg-blue-500 flex justify-center items-center text-2xl text-white font-bold">{session.user.name[0]}</h2>
             <p className="ms-2 hidden text-left text-xs sm:block">
-              <strong className="block font-medium">Eric Frusciante</strong>
+              <strong className="block font-medium">{session?.user.name}</strong>
   
-              <span className="text-gray-500"> eric@frusciante.com </span>
+              <span className="text-gray-500"> {session?.user.email} </span>
             </p>
   
             <svg
@@ -127,6 +131,32 @@ export default function Header({ toggleSidebar }) {
               />
             </svg>
           </button>
+  )
+ }
+           {popupVisible && status === 'authenticated' && (
+        <div className="z-30 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg flex gap-2 items-center justify-center flex-col w-[90%] lg:w-[30%]">
+          
+
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex justify-end px-4 pt-4">
+    
+   
+    </div>
+    <div class="flex flex-col items-center pb-10">
+    <h2 className="text-center h-20 w-20 rounded-full object-cover bg-blue-500 flex justify-center items-center text-5xl text-white font-bold mb-4">{session.user.name[0]}</h2>
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{session.user.name}</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{session.user.email}</span>
+        <div class="flex mt-4 md:mt-6">
+            <button onClick={handleInitialClick}
+  class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Return</button>
+            <button onClick={()=>signOut()} class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Log Out</button>
+        </div>
+    </div>
+</div>
+          </div>
+        </div>
+             )}
           <button
           onClick={toggleSidebar}
           className="mr-5 block lg:hidden shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"

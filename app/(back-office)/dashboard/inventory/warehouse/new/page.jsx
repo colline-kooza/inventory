@@ -8,9 +8,11 @@ import TextArea from '@/components/formInputs/TextArea'
 import SelectInput from '@/components/formInputs/SelectInput'
 import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function NewWareHouse({initialData , isUpdate}) {
   const router=useRouter()
+  const { data: session } = useSession();
   const options=[
     {
       title:"Branch",
@@ -33,15 +35,18 @@ export default function NewWareHouse({initialData , isUpdate}) {
 
    async function onSubmit(data){
   try {
+    const warehouseData = isUpdate
+    ? { ...data, ownerId: session.user.id }
+    : { ...data, ownerId: session.user.id };
     const method = isUpdate ? "PUT":"POST"
     const baseUrl = 'http://localhost:3000';
     const apiUrl =isUpdate? `${baseUrl}/api/warehouse/${initialData.id}`: `${baseUrl}/api/warehouse`
-    ApiRequest({ setLoading, url: apiUrl, data:data, toastName: 'warehouse', reset, method , onSuccess: (result) => {
+    ApiRequest({ setLoading, url: apiUrl, data:warehouseData , toastName: 'warehouse', reset, method , onSuccess: (result) => {
       router.push('/dashboard/inventory/warehouse');
     } });
      
   } catch (error) {
-    
+    console.log(error)
   }
       }
   return (

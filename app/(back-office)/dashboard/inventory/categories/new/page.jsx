@@ -11,7 +11,7 @@ export default function CategoriesNew() {
      </div>
    {/* form */}
    <div className='lg:mx-[5rem]'>
-  <CreateForm/>
+  <CreateForm isUpdate={false} />
   </div>
     </div>
   )

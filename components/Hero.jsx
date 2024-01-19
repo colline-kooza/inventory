@@ -4,8 +4,8 @@ import React from 'react'
 export default function Hero() {
   return (
   <>
-  <main class="dm flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-28">
-    <Link href="#" target="_blank" rel="noreferrer"
+  <main class=" dm flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4">
+    <Link href="/dashboard/home/overview" target="_blank" rel="noreferrer"
         class="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out">Flexible ,
         <span class="font-semibold">Reliable ,</span>Affordable</Link>
     <h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">Scales with your

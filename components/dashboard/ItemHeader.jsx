@@ -5,6 +5,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 import { CiLineHeight } from 'react-icons/ci';
 import { BsQuestion } from "react-icons/bs";
 import { SiAddthis } from 'react-icons/si';
+import { signOut } from 'next-auth/react';
 
 export default function ItemHeader({title , link}) {
     const [isOpen, setIsOpen] = useState(false);
@@ -61,9 +62,9 @@ export default function ItemHeader({title , link}) {
               </a>
             </li>
             <li>
-              <a href="/" className="text-gray-900  block px-4 py-2 hover:bg-gray-100 dark:hover:bg-blue-600 dark:hover:text-white">
+              <button onClick={()=>signOut} className="text-gray-900  block px-4 py-2 hover:bg-gray-100 dark:hover:bg-blue-600 dark:hover:text-white">
                 Sign out
-              </a>
+              </button>
             </li>
           </ul>
         </div>

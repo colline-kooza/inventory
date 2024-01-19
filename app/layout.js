@@ -5,6 +5,7 @@ import { ourFileRouter } from './api/uploadthing/core'
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from '@/context/AuthProviders';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +18,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+      <AuthProvider>
+
       <Toaster
       position="top-center"
       reverseOrder={false}
@@ -25,6 +28,8 @@ export default function RootLayout({ children }) {
         />
         <NavBar/>
         {children}
+        </AuthProvider>
+
         </body>
     </html>
   )

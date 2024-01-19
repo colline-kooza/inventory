@@ -8,6 +8,7 @@ import ApiRequest from '@/utils/ApiRequest'
 import { useRouter } from 'next/navigation'
 
 export default function CreateForm({initialData, isUpdate}) {
+  // console.log({initialData, isUpdate})
   const router=useRouter()
     const [loading , setLoading]=useState(false)
     const {
@@ -17,8 +18,8 @@ export default function CreateForm({initialData, isUpdate}) {
       formState: { errors },
     } = useForm({
       defaultValues: {
-        title: initialData.title,
-        description: initialData.description,
+        title: initialData?.title,
+        description: initialData?.description,
       },
     });
 
@@ -28,7 +29,7 @@ export default function CreateForm({initialData, isUpdate}) {
             description: data.description,
             title: data.name,
           };
-      
+      console.log(categoryData)
           const method = isUpdate ? "PUT" : "POST";
           const baseUrl = 'http://localhost:3000';
           const apiUrl = initialData ? `${baseUrl}/api/categories/${initialData.id}` : `${baseUrl}/api/categories`;

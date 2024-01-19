@@ -5,23 +5,24 @@ export async function POST(request) {
   try {
     const {
       title,
-      imageUrl,
-      description,
-      barcode,
-      brandId,
+      categoryId,
       buyingPrice,
-      dimensions,
-      notes,
-      qty,
-      reOrderPoint,
+      warehouseId,
       sellingPrice,
       supplierId,
+      reOrderPoint,
       sku,
-      taxRate,
+      brandId,
+      qty,
       unitId,
-      warehouseId,
+      barcode,
       weight,
-      categoryId,
+      dimension,
+      taxRate,
+      description,
+      notes,
+      imageUrl,
+      createdBy,
     } = await request.json();
 
     const item = await db.item.create({
@@ -30,26 +31,27 @@ export async function POST(request) {
         images: imageUrl,
         description,
         barcode,
-        brandId,
         buyingPrice: parseFloat(buyingPrice),
-        dimensions,
+        dimensions: parseFloat(dimension),
         notes,
         qty: parseInt(qty, 10),
         reorderPoint: parseFloat(reOrderPoint),
         sellingPrice: parseFloat(sellingPrice),
         sku,
         taxRate: parseFloat(taxRate),
-        unitId,
-        warehouseId,
+        createdBy: { connect: { id: createdBy } },
+        warehouse: { connect: { id: warehouseId } },
+        supplier: { connect: { id: supplierId } },
         weight: parseFloat(weight),
-        supplierId,
-        categoryId,
+        category: { connect: { id: categoryId } },
+        brand: { connect: { id: brandId } },
+        unit: { connect: { id: unitId } },
       },
     });
 
     return NextResponse.json(item);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json(
       {
         error,
@@ -61,6 +63,7 @@ export async function POST(request) {
     );
   }
 }
+
 
 export async function GET(request) {
   try {
@@ -80,6 +83,37 @@ export async function GET(request) {
       },
       {
        status: 500,
+      }
+    );
+  }
+}
+export async function GET(request) {
+  try {
+    // Fetch stock levels data
+    const stockLevels = await db.item.findMany({
+      select: {
+        title: true,
+        qty: true,
+        warehouse: { select: { title: true } },
+      },
+    });
+
+    // Fetch sales data
+    // Add your logic to fetch sales data from the database
+
+    // Fetch adjustments data
+    // Add your logic to fetch adjustments data from the database
+
+    return NextResponse.json({ stockLevels /*, sales, adjustments */ });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      {
+        error,
+        message: "Failed to fetch reports and analytics data",
+      },
+      {
+        status: 500,
       }
     );
   }

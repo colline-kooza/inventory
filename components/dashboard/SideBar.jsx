@@ -7,10 +7,12 @@ import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { VscGraph } from 'react-icons/vsc';
 import { HiOutlineClipboardDocument } from 'react-icons/hi2';
 import { GrIntegration } from 'react-icons/gr';
+import { useSession } from 'next-auth/react';
 
 export default function SideBar({ isOpen, closeSidebar }) {
   const sidebarRef = useRef();
-
+  const { data: session, status} = useSession()
+//  console.log({ data: session, status})
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -226,22 +228,23 @@ export default function SideBar({ isOpen, closeSidebar }) {
           </ul>
         </div>
 
-        <div className="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
-          <Link href="/" onClick={handleCloseSidebar} className="dm flex items-center gap-2 shrink-0 bg-gray-800  p-4 hover:bg-gray-500">
-            <img
-              alt="Man"
-              src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-              className="h-10 w-10 rounded-full object-cover"
-            />
-
+        {
+          status === "loading" ?(<span class="loader2"></span>):(
+            <div className="dm z-50 sticky inset-x-0 bottom-0 border-t border-slate-600">
+          <Link href="/" onClick={handleCloseSidebar} className="dm flex items-center gap-2 shrink-0 bg-gray-800  p-4 hover:bg-gray-500 w-full">
+         
+          <h2 className="h-10 w-10 rounded-full object-cover bg-blue-500 flex justify-center items-center text-2xl text-white font-bold">{session.user.name[0]}</h2>
             <div className="text-gray-100">
               <p className="text-xs">
-                <strong className="block text-gray-100 font-medium">Eric Frusciante</strong>
-                <span>eric@frusciante.com</span>
+                <strong className="block text-gray-100 font-medium">{session?.user.name}</strong>
+                <span>{session.user.email}</span>
               </p>
             </div>
           </Link>
         </div>
+          )
+        }
+        
       </div>
     </div>
   );

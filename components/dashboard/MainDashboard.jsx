@@ -1,8 +1,11 @@
 import { CiCircleCheck } from "react-icons/ci";
 
 import React from 'react'
+import getData from "@/utils/getData";
 
-export default function MainDashboard() {
+export default async function MainDashboard() {
+    const warehouse = await getData("warehouse")
+    
     const salesActivity=[
         {
             title:"To be packed",
@@ -33,17 +36,13 @@ export default function MainDashboard() {
             color:"text-green-600"
         }
     ]
-    
-    const inventorySystem =[
-        {
-            title:"Quantity in Hand",
-            number:"8",
-        },
-        {
-            title:"Quantity in bank",
-            number:"12",
-        },
-    ]
+    const inventorySystem= warehouse.map((item , i)=>{
+        return{
+            title:item.title,
+            // number: item.item.length,
+        }
+    })
+ 
   return (
     <div>
      <div class="p-4 ">
@@ -60,7 +59,7 @@ export default function MainDashboard() {
       <h4 className='text-3xl font-semibold '>{activity.number}</h4>
        <small className='text-slate-500'>{activity.unit}</small>
       </div>
-       <span className='text-sm text-slate-500 flex items-center gap-1 shrink-0'><CiCircleCheck />{activity.title}</span>
+       <span className='text-sm text-slate-500 flex flex-col items-center gap-1 shrink-0'><CiCircleCheck />{activity.title}</span>
          </div>   
             )
            }) 
@@ -73,7 +72,7 @@ export default function MainDashboard() {
         {
             inventorySystem.map((inventory , i)=>{
                 return(
-                    <div key={i} class="flex items-center justify-around h-[50px] rounded border border-slate-200 bg-gray-50  hover:border-blue-900 transition-all shadow-md">
+                    <div key={i} class="flex  items-center justify-around h-[50px] rounded border border-slate-200 bg-gray-50  hover:border-blue-900 transition-all shadow-md">
                     <h3 className='text-slate-500 text-sm'>{inventory.title}</h3>
                    <h4 className='text-sm font-semibold'>{inventory.number}</h4>
                       </div>
